@@ -3,10 +3,7 @@ package com.obd;
 import com.fazecast.jSerialComm.SerialPort;
 import com.obd.pires.commands.control.VinCommand;
 import com.obd.pires.commands.engine.RPMCommand;
-import com.obd.pires.commands.protocol.EchoOffCommand;
-import com.obd.pires.commands.protocol.LineFeedOffCommand;
-import com.obd.pires.commands.protocol.SelectProtocolCommand;
-import com.obd.pires.commands.protocol.TimeoutCommand;
+import com.obd.pires.commands.protocol.*;
 import com.obd.pires.commands.temperature.AmbientAirTemperatureCommand;
 import com.obd.pires.enums.ObdProtocols;
 
@@ -19,9 +16,9 @@ public class Main {
         Arrays.stream(commPorts).forEach(System.out::println);
         SerialPort comPort = commPorts[2];
         System.out.println("Connected to: " + comPort.getSystemPortName());
-        comPort.setBaudRate(38400);
+        //comPort.setBaudRate(38400);
 
-        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 100, 100);
 
         //comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 5000, 0);
 
@@ -32,22 +29,22 @@ public class Main {
             return;
         }
 
-        try (InputStream inStream = comPort.getInputStream();
-             OutputStream outStream = comPort.getOutputStream()) {
-
+        try{
             // Execute commands
+            System.out.println("Reset OBD");
+            new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Executing EchoOffCommand");
-            new EchoOffCommand().run(inStream, outStream);
+            new EchoOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Executing LineFeedOffCommand");
-            new LineFeedOffCommand().run(inStream, outStream);
+            new LineFeedOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Executing TimeoutCommand");
-            new TimeoutCommand(2500).run(inStream, outStream);
+            new TimeoutCommand(5000).run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Executing SelectProtocolCommand");
-            new SelectProtocolCommand(ObdProtocols.AUTO).run(inStream, outStream);
+            new SelectProtocolCommand(ObdProtocols.AUTO).run(comPort.getInputStream(), comPort.getOutputStream());
+            System.out.println("Headers Off");
+            new HeadersOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Getting EngineRPM");
-            RPMCommand rpmCommand = new RPMCommand();
-            rpmCommand.setResponseTimeDelay(500L);
-            new RPMCommand().run(inStream, outStream);
+            new RPMCommand().run(comPort.getInputStream(), comPort.getOutputStream());
 
         } catch (IOException e) {
             System.err.println("IOException occurred: " + e.getMessage());
