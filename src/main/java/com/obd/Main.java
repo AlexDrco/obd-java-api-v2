@@ -2,6 +2,7 @@ package com.obd;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.obd.pires.commands.control.VinCommand;
+import com.obd.pires.commands.engine.RPMCommand;
 import com.obd.pires.commands.protocol.EchoOffCommand;
 import com.obd.pires.commands.protocol.LineFeedOffCommand;
 import com.obd.pires.commands.protocol.SelectProtocolCommand;
@@ -43,10 +44,8 @@ public class Main {
             new TimeoutCommand(2500).run(inStream, outStream);
             System.out.println("Executing SelectProtocolCommand");
             new SelectProtocolCommand(ObdProtocols.AUTO).run(inStream, outStream);
-            System.out.println("Getting Vin");
-            new VinCommand().run(inStream, outStream);
-            System.out.println("Getting Ambient Temperature");
-            new AmbientAirTemperatureCommand().run(inStream, outStream);
+            System.out.println("Getting EngineRPM");
+            new RPMCommand().run(inStream, outStream);
 
         } catch (IOException e) {
             System.err.println("IOException occurred: " + e.getMessage());
