@@ -19,9 +19,10 @@ public class Main {
         SerialPort comPort = commPorts[2];
         System.out.println("Connected to: " + comPort.getSystemPortName());
         comPort.setBaudRate(38400);
-        comPort.setNumDataBits(8);
-        comPort.setNumStopBits(SerialPort.ONE_STOP_BIT);
-        comPort.setParity(SerialPort.NO_PARITY);
+
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+
+        //comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 5000, 0);
 
         if (comPort.openPort()) {
             System.out.println("Port opened successfully.");
@@ -41,7 +42,7 @@ public class Main {
             System.out.println("Executing TimeoutCommand");
             new TimeoutCommand(2500).run(inStream, outStream);
             System.out.println("Executing SelectProtocolCommand");
-            new SelectProtocolCommand(ObdProtocols.ISO_9141_2).run(inStream, outStream);
+            new SelectProtocolCommand(ObdProtocols.AUTO).run(inStream, outStream);
             System.out.println("Getting Vin");
             new VinCommand().run(inStream, outStream);
             System.out.println("Getting Ambient Temperature");
