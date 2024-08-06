@@ -201,6 +201,7 @@ public abstract class ObdCommand {
         char c;
         // -1 if the end of the stream is reached
         while (((b = (byte) in.read()) > -1)) {
+            System.out.println("b: " + b);
             c = (char) b;
             if (c == '>') // read until '>' arrives
             {
@@ -235,9 +236,7 @@ public abstract class ObdCommand {
             try {
                 messageError = errorClass.newInstance();
                 messageError.setCommand(this.cmd);
-            } catch (InstantiationException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
 

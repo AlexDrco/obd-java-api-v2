@@ -45,6 +45,8 @@ public class Main {
             System.out.println("Executing SelectProtocolCommand");
             new SelectProtocolCommand(ObdProtocols.AUTO).run(inStream, outStream);
             System.out.println("Getting EngineRPM");
+            RPMCommand rpmCommand = new RPMCommand();
+            rpmCommand.setResponseTimeDelay(500L);
             new RPMCommand().run(inStream, outStream);
 
         } catch (IOException e) {
