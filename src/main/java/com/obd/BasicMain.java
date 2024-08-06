@@ -1,50 +1,43 @@
+
 package com.obd;
 
 import com.fazecast.jSerialComm.SerialPort;
-import java.io.*;
+import com.obd.pires.commands.protocol.*;
+import com.obd.pires.enums.ObdProtocols;
+
+
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class BasicMain {
     public static void main(String[] args) {
-        SerialPort[] commPorts = SerialPort.getCommPorts();
-        SerialPort comPort = commPorts[2]; // Ensure this is the correct port
-        comPort.setBaudRate(38400);
+        try {
+            // Open serial port connection
+            SerialPort serialPort = SerialPort.getCommPort("COM5"); // Adjust the port name as needed
+            serialPort.setComPortParameters(9600, 8, 1, 0);
+            serialPort.openPort();
 
-        if (comPort.openPort()) {
-            System.out.println("Port opened successfully.");
-        } else {
-            System.out.println("Failed to open port.");
-            return;
-        }
+            InputStream in = serialPort.getInputStream();
+            OutputStream out = serialPort.getOutputStream();
 
-        try (InputStream inStream = comPort.getInputStream();
-             OutputStream outStream = comPort.getOutputStream()) {
+            // Initialize ELM327
+            new ObdRawCommand("ATZ").run(in, out);
+            new ObdRawCommand("AT E0").run(in, out);
+            new ObdRawCommand("AT L0").run(in, out);
+            new ObdRawCommand("AT S0").run(in, out);
+            new ObdRawCommand("AT H0").run(in, out);
+            new ObdRawCommand("AT SP 0").run(in, out);
 
-            // Initialize the ELM327
-            outStream.write("ATZ\r".getBytes());
-            Thread.sleep(100);
-            outStream.write("ATE0\r".getBytes());
-            Thread.sleep(100);
-            outStream.write("ATL0\r".getBytes());
-            Thread.sleep(100);
-            outStream.write("ATSP0\r".getBytes()); // Set protocol to automatic
-            Thread.sleep(100);
 
-            // Send the VIN request
-            outStream.write("0902\r".getBytes());
-            Thread.sleep(100);
+            // Send OBD command
+            ObdRawCommand command = new ObdRawCommand("010C");
+            command.run(in, out);
+            System.out.println("RPM: " + command.getFormattedResult());
 
-            // Read the response
-            byte[] buffer = new byte[1024];
-            int bytesRead = inStream.read(buffer);
-            String response = new String(buffer, 0, bytesRead);
-            System.out.println("VIN Response: " + response);
-
-        } catch (IOException | InterruptedException e) {
+            // Close serial port
+            serialPort.closePort();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            comPort.closePort();
-            System.out.println("Port closed.");
         }
     }
 }
-

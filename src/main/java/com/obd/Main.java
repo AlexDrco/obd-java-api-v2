@@ -28,6 +28,7 @@ public class Main {
 
         try {
             // Execute commands
+
             System.out.println("Reset OBD");
             new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Executing EchoOffCommand");
