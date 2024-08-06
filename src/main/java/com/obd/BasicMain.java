@@ -14,7 +14,10 @@ public class BasicMain {
         try {
             // Open serial port connection
             SerialPort serialPort = SerialPort.getCommPort("COM5"); // Adjust the port name as needed
-            serialPort.setComPortParameters(9600, 8, 1, 0);
+            //serialPort.setComPortParameters(38400, 8, 1, 0);
+            serialPort.setBaudRate(38400);
+            serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 1000, 1000);
+
             serialPort.openPort();
 
             InputStream in = serialPort.getInputStream();
@@ -24,15 +27,20 @@ public class BasicMain {
             new ObdRawCommand("ATZ").run(in, out);
             new ObdRawCommand("AT E0").run(in, out);
             new ObdRawCommand("AT L0").run(in, out);
-            new ObdRawCommand("AT S0").run(in, out);
+//            new ObdRawCommand("AT S0").run(in, out);
             new ObdRawCommand("AT H0").run(in, out);
             new ObdRawCommand("AT SP 0").run(in, out);
 
 
             // Send OBD command
-            ObdRawCommand command = new ObdRawCommand("010C");
+            ObdRawCommand command = new ObdRawCommand("AT RV");
             command.run(in, out);
-            System.out.println("RPM: " + command.getFormattedResult());
+            System.out.println("Battery: " + command.getCalculatedResult());
+
+            // Send OBD command
+            ObdRawCommand command1 = new ObdRawCommand("010C");
+            command1.run(in, out);
+            System.out.println("RPM: " + command1.getCalculatedResult());
 
             // Close serial port
             serialPort.closePort();
