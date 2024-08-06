@@ -14,8 +14,8 @@ public class Main {
         Arrays.stream(commPorts).forEach(System.out::println);
         SerialPort comPort = commPorts[2];
         System.out.println("Connected to: " + comPort.getSystemPortName());
-        comPort.setBaudRate(38400);
-        //comPort.setBaudRate(10400);
+        //comPort.setBaudRate(38400);
+        comPort.setBaudRate(10400);
 
         comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 100, 100);
 
@@ -29,16 +29,16 @@ public class Main {
         try {
             // Execute commands
 
-            System.out.println("Reset OBD");
-            new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing EchoOffCommand");
-            new EchoOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing LineFeedOffCommand");
-            new LineFeedOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing TimeoutCommand");
-            new TimeoutCommand(5000).run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing SpacesOffCommand");
-            new SpacesOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+//            System.out.println("Reset OBD");
+//            new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+//            System.out.println("Executing EchoOffCommand");
+//            new EchoOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+//            System.out.println("Executing LineFeedOffCommand");
+//            new LineFeedOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+//            System.out.println("Executing TimeoutCommand");
+//            new TimeoutCommand(5000).run(comPort.getInputStream(), comPort.getOutputStream());
+//            System.out.println("Executing SpacesOffCommand");
+//            new SpacesOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Executing SelectProtocolCommand");
             new SelectProtocolCommand(ObdProtocols.AUTO).run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println("Getting EngineRPM");
