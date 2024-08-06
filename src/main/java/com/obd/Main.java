@@ -46,6 +46,9 @@ public class Main {
             System.out.println("Getting EngineRPM");
             new RPMCommand().run(comPort.getInputStream(), comPort.getOutputStream());
 
+            new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+            new CloseCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+
         } catch (IOException e) {
             System.err.println("IOException occurred: " + e.getMessage());
             e.printStackTrace();
