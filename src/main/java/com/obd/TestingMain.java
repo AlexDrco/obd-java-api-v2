@@ -1,7 +1,5 @@
 package com.obd;
 
-import com.obd.agnx.ecu.ECURequestListener;
-import com.obd.agnx.ecu.ECUSimulator;
 import com.obd.pires.commands.control.VinCommand;
 import com.obd.pires.commands.protocol.EchoOffCommand;
 import com.obd.pires.commands.protocol.LineFeedOffCommand;
@@ -23,8 +21,7 @@ public class TestingMain {
         // Mock output stream
         OutputStream outStream = new ByteArrayOutputStream();
 
-        // Create ECU Simulator
-        ECURequestListener ecuSimulator = new ECUSimulator();
+
 
         // Execute commands
         try {
@@ -61,8 +58,6 @@ public class TestingMain {
 
             // Use ECU Simulator to generate responses
             String request = "010C"; // Example request for Engine RPM
-            String response = ecuSimulator.onRequest(request);
-            System.out.println("ECU Response: " + response);
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);

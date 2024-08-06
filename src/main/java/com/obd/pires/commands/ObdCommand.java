@@ -171,7 +171,7 @@ public abstract class ObdCommand {
         rawData = removeAll(WHITESPACE_PATTERN, rawData); //removes all [ \t\n\x0B\f\r]
         rawData = removeAll(BUSINIT_PATTERN, rawData);
 
-        if (!DIGITS_LETTERS_PATTERN.matcher(rawData).matches()) {
+        if (!DIGITS_LETTERS_PATTERN.matcher(rawData).matches()) {;
             throw new NonNumericResponseException(rawData);
         }
 

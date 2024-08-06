@@ -2,6 +2,7 @@ package com.obd;
 
 
 import com.fazecast.jSerialComm.SerialPort;
+import com.obd.pires.commands.control.VinCommand;
 import com.obd.pires.commands.protocol.EchoOffCommand;
 import com.obd.pires.commands.protocol.LineFeedOffCommand;
 import com.obd.pires.commands.protocol.SelectProtocolCommand;
@@ -10,10 +11,14 @@ import com.obd.pires.commands.temperature.AmbientAirTemperatureCommand;
 import com.obd.pires.enums.ObdProtocols;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        SerialPort comPort = SerialPort.getCommPorts()[0];
+        SerialPort[] commPorts = SerialPort.getCommPorts();
+        Arrays.stream(commPorts).forEach(System.out::println);
+        SerialPort comPort = commPorts[2];
+        System.out.println("Connected to: " + comPort.getSystemPortName());
         comPort.setBaudRate(9600);
 
         if (comPort.openPort()) {
@@ -29,8 +34,11 @@ public class Main {
             // Execute commands
             new EchoOffCommand().run(inStream, outStream);
             new LineFeedOffCommand().run(inStream, outStream);
-            new TimeoutCommand(125).run(inStream, outStream);
-            new SelectProtocolCommand(ObdProtocols.AUTO).run(inStream, outStream);
+            new TimeoutCommand(2500).run(inStream, outStream);
+            new SelectProtocolCommand(ObdProtocols.ISO_9141_2).run(inStream, outStream);
+            System.out.println("Getting Vin");
+            new VinCommand().run(inStream, outStream);
+            System.out.println("Getting Ambient Temperature");
             new AmbientAirTemperatureCommand().run(inStream, outStream);
 
         } catch (IOException | InterruptedException e) {
