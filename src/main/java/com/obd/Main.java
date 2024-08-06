@@ -1,13 +1,17 @@
 package com.obd;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.obd.pires.commands.control.VinCommand;
+import com.obd.pires.commands.ObdCommand;
+import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
+import com.obd.pires.commands.fuel.FuelLevelCommand;
 import com.obd.pires.commands.protocol.*;
+import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 import com.obd.pires.enums.ObdProtocols;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,40 +30,50 @@ public class Main {
         }
 
         try {
-            // Execute commands
-
-            System.out.println("Reset OBD");
+            // Setup ELM327
             new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing EchoOffCommand");
             new EchoOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing LineFeedOffCommand");
             new LineFeedOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing TimeoutCommand");
             new TimeoutCommand(5000).run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Executing SelectProtocolCommand");
             new SelectProtocolCommand(ObdProtocols.AUTO).run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Getting EngineRPM");
-            RPMCommand rpmCommand = new RPMCommand();
-            rpmCommand.run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("RPM: " + rpmCommand.getCalculatedResult());
 
-            //Handle VinCommand error
-            VinCommand vinCommand = new VinCommand();
-            vinCommand.run(comPort.getInputStream(), comPort.getOutputStream());
-            System.out.println("Vin: " + vinCommand.getFormattedResult());
+            // List of commands to execute
+            List<ObdCommand> commands = Arrays.asList(
+                    new DistanceSinceCCCommand(),
+                    new TroubleCodesCommand(),
+                    new PermanentTroubleCodesCommand(),
+                    new RPMCommand(),
+                    new VinCommand(),
+                    new FuelLevelCommand(),
+                    new EngineCoolantTemperatureCommand(),
+                    new AvailablePidsCommand_01_20(),
+                    new DtcNumberCommand(),
+                    new ObdRawCommand("01 03")
+            );
+
+            // Execute each command
+            for (ObdCommand command : commands) {
+                executeCommand(command, comPort);
+            }
 
             new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
             new CloseCommand().run(comPort.getInputStream(), comPort.getOutputStream());
 
-        } catch (IOException e) {
-            System.err.println("IOException occurred: " + e.getMessage());
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            System.err.println("InterruptedException occurred: " + e.getMessage());
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Exception occurred: " + e.getMessage());
             e.printStackTrace();
         } finally {
             comPort.closePort();
             System.out.println("Port closed.");
+        }
+    }
+
+    private static void executeCommand(ObdCommand command, SerialPort comPort) {
+        try {
+            command.run(comPort.getInputStream(), comPort.getOutputStream());
+            System.out.println(command.getName() + ": " + command.getFormattedResult());
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Failed to execute " + command.getName() + ": " + e.getMessage());
         }
     }
 }
