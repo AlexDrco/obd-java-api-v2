@@ -8,10 +8,12 @@ import com.obd.pires.commands.fuel.FuelLevelCommand;
 import com.obd.pires.commands.protocol.*;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 import com.obd.pires.enums.ObdProtocols;
+import com.obd.pires.exceptions.NoDataException;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 public class Main {
     public static void main(String[] args) {
@@ -72,7 +74,7 @@ public class Main {
         try {
             command.run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println(command.getName() + ": " + command.getFormattedResult());
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | NoDataException e) {
             System.err.println("Failed to execute " + command.getName() + ": " + e.getMessage());
         }
     }

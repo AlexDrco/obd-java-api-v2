@@ -60,7 +60,7 @@ public class DtcNumberCommand extends ObdCommand {
      * @return a {@link java.lang.String} object.
      */
     public String getFormattedResult() {
-        final String res = milOn ? "MIL is ON" : "MIL is OFF";
+        final String res = milOn ? "MIL is ON " : "MIL is OFF ";
         return res + codeCount + " codes";
     }
 
