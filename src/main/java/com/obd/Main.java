@@ -22,7 +22,7 @@ public class Main {
         SerialPort comPort = commPorts[2];
         System.out.println("Connected to: " + comPort.getSystemPortName());
         comPort.setBaudRate(38400);
-        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 1000, 1000);
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 10000, 10000);
 
         if (comPort.openPort()) {
             System.out.println("Port opened successfully.");
@@ -74,7 +74,7 @@ public class Main {
         try {
             command.run(comPort.getInputStream(), comPort.getOutputStream());
             System.out.println(command.getName() + ": " + command.getFormattedResult());
-        } catch (IOException | InterruptedException | NoDataException e) {
+        } catch (IOException | InterruptedException | NoDataException | NumberFormatException e) {
             System.err.println("Failed to execute " + command.getName() + ": " + e.getMessage());
         }
     }
