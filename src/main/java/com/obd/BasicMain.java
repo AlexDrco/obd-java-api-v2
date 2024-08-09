@@ -1,51 +1,46 @@
-
 package com.obd;
 
-import com.fazecast.jSerialComm.SerialPort;
+import com.obd.comm.SerialPortSender;
+import com.obd.comm.CommandResponse;
+import com.obd.pires.commands.ObdCommand;
+import com.obd.pires.commands.control.*;
+import com.obd.pires.commands.engine.RPMCommand;
+import com.obd.pires.commands.fuel.FuelLevelCommand;
 import com.obd.pires.commands.protocol.*;
-import com.obd.pires.enums.ObdProtocols;
+import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
-
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
 
 public class BasicMain {
     public static void main(String[] args) {
-        try {
-            // Open serial port connection
-            SerialPort serialPort = SerialPort.getCommPort("COM5"); // Adjust the port name as needed
-            //serialPort.setComPortParameters(38400, 8, 1, 0);
-            serialPort.setBaudRate(38400);
-            serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 1000, 1000);
 
-            serialPort.openPort();
+        SerialPortSender sender = new SerialPortSender("COM5");
+        if (!sender.startPort()) {
+            System.err.println("Failed to open port.");
+            return;
+        }
 
-            InputStream in = serialPort.getInputStream();
-            OutputStream out = serialPort.getOutputStream();
+        sender.setupELM327();
 
-            // Initialize ELM327
-            new ObdRawCommand("ATZ").run(in, out);
-            new ObdRawCommand("AT E0").run(in, out);
-            new ObdRawCommand("AT L0").run(in, out);
-//            new ObdRawCommand("AT S0").run(in, out);
-            new ObdRawCommand("AT H0").run(in, out);
-            new ObdRawCommand("AT SP 0").run(in, out);
+        List<ObdCommand> commands = Arrays.asList(
+                new DistanceSinceCCCommand(),
+                new TroubleCodesCommand(),
+                new PermanentTroubleCodesCommand(),
+                new RPMCommand(),
+                new VinCommand(),
+                new FuelLevelCommand(),
+                new EngineCoolantTemperatureCommand(),
+                new AvailablePidsCommand_01_20(),
+                new DtcNumberCommand(),
+                new ObdRawCommand("01 03")
+        );
 
+        sender.sendCommands(commands);
 
-            // Send OBD command
-            ObdRawCommand command = new ObdRawCommand("AT RV");
-            command.run(in, out);
-            System.out.println("Battery: " + command.getCalculatedResult());
-
-            // Send OBD command
-            ObdRawCommand command1 = new ObdRawCommand("010C");
-            command1.run(in, out);
-            System.out.println("RPM: " + command1.getCalculatedResult());
-
-            // Close serial port
-            serialPort.closePort();
-        } catch (Exception e) {
-            e.printStackTrace();
+        List<CommandResponse> responses = sender.getCommandResponses();
+        for (CommandResponse response : responses) {
+            System.out.println("Command: " + response.getCommand() + ", Response: " + response.getResponse());
         }
     }
 }
