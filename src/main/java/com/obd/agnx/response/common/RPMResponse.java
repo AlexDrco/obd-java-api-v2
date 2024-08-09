@@ -14,7 +14,7 @@ public class RPMResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "41 0C 1A F8"; // Example RPM response
+        return "41 0C 0A 80"; // 700 RPMs
     }
 
     @Override

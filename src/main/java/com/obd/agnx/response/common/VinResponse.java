@@ -10,7 +10,7 @@ public class VinResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "49 02 01 57 50 30 5A 5A 5A 5A 5A 5A 5A 5A 5A 5A 5A 5A"; // Example VIN response
+        return "49 02 01 57 50 30 5A 5A 5A 5A 5A 5A 5A 5A 5A 5A 5A 5A"; // VIN 12345678901234567
     }
 
     @Override

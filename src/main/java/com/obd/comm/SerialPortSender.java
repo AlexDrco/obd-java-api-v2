@@ -1,36 +1,47 @@
 package com.obd.comm;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.obd.pires.commands.ObdCommand;
-import com.obd.pires.commands.protocol.*;
-import com.obd.pires.enums.ObdProtocols;
-import com.obd.pires.exceptions.NoDataException;
+import com.obd.comm.sender.AbstractOBDSender;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-public class SerialPortSender {
+/**
+ * SerialPortSender is an AbstractOBDSender that uses a serial port
+ * to communicate with the OBD-II interface. It handles opening and closing the serial port,
+ * as well as providing input and output streams for communication.
+ */
+public class SerialPortSender extends AbstractOBDSender {
 
     private final SerialPort serialPort;
-    private final List<CommandResponse> commandResponses;
+    // Baud rate is set to 38400 as it seems to be the most common rate for OBD-II interfaces.
+    private final int BAUD_RATE = 38400;
+    // Relatively long timeout to allow for slower devices to respond. Usually newer vehicles.
+    private final int TIMEOUT = 10000;
 
+    /**
+     * Initializes the SerialPortSender with a specific port name ("COM5").
+     * @param portName The name of the serial port to be used.
+     */
     public SerialPortSender(String portName) {
         serialPort = SerialPort.getCommPort(portName);
-        serialPort.setBaudRate(38400);
-        serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 10000, 10000);
-        commandResponses = new ArrayList<>();
+        serialPort.setBaudRate(BAUD_RATE);
+        serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, TIMEOUT, TIMEOUT);
     }
 
+    /**
+     * Initializes the SerialPortSender with a specific port index.
+     * @param portIndex The index of the serial port to be used.
+     */
     public SerialPortSender(int portIndex) {
         serialPort = SerialPort.getCommPorts()[portIndex];
-        serialPort.setBaudRate(38400);
-        serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 10000, 10000);
-        commandResponses = new ArrayList<>();
+        serialPort.setBaudRate(BAUD_RATE);
+        serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, TIMEOUT, TIMEOUT);
     }
 
-    public boolean startPort() {
+    @Override
+    public boolean startConnection() {
         if (serialPort.openPort()) {
             System.out.println("Port opened successfully.");
             return true;
@@ -40,60 +51,19 @@ public class SerialPortSender {
         }
     }
 
-    public void setupELM327() {
-        try {
-            new ObdResetCommand().run(serialPort.getInputStream(), serialPort.getOutputStream());
-            new EchoOffCommand().run(serialPort.getInputStream(), serialPort.getOutputStream());
-            new LineFeedOffCommand().run(serialPort.getInputStream(), serialPort.getOutputStream());
-            new TimeoutCommand(5000).run(serialPort.getInputStream(), serialPort.getOutputStream());
-            new SelectProtocolCommand(ObdProtocols.AUTO).run(serialPort.getInputStream(), serialPort.getOutputStream());
-
-        } catch (IOException | InterruptedException e) {
-            System.err.println("Exception occurred: " + e.getMessage());
-            e.printStackTrace();
-            serialPort.closePort();
-            System.out.println("Port closed.");
-        }
+    @Override
+    protected InputStream getInputStream() throws IOException {
+        return serialPort.getInputStream();
     }
 
-    public void sendCommands(List<ObdCommand> commands) {
-        if (!serialPort.isOpen() && !startPort()) {
-            System.err.println("Failed to open port. Cannot send commands.");
-            return;
-        }
-
-        try {
-            // Execute each command using streams
-            commandResponses.addAll(commands.stream()
-                    .map(this::executeCommand)
-                    .toList());
-
-            // Reset and close the ELM327
-            new ObdResetCommand().run(serialPort.getInputStream(), serialPort.getOutputStream());
-            new CloseCommand().run(serialPort.getInputStream(), serialPort.getOutputStream());
-
-        } catch (IOException | InterruptedException e) {
-            System.err.println("Exception occurred: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            serialPort.closePort();
-            System.out.println("Port closed.");
-        }
+    @Override
+    protected OutputStream getOutputStream() throws IOException {
+        return serialPort.getOutputStream();
     }
 
-    private CommandResponse executeCommand(ObdCommand command) {
-        try {
-            command.run(serialPort.getInputStream(), serialPort.getOutputStream());
-            String response = command.getFormattedResult();
-            System.out.println(command.getName() + ": " + response);
-            return new CommandResponse(command.getName(), response);
-        } catch (IOException | InterruptedException | NoDataException | NumberFormatException e) {
-            System.err.println("Failed to execute " + command.getName() + ": " + e.getMessage());
-            return new CommandResponse(command.getName(), "Error: " + e.getMessage());
-        }
-    }
-
-    public List<CommandResponse> getCommandResponses() {
-        return commandResponses;
+    @Override
+    protected void closeConnection() throws IOException {
+        serialPort.closePort();
+        System.out.println("Port closed.");
     }
 }
