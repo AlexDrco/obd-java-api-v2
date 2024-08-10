@@ -2,6 +2,7 @@ package com.obd.examples;
 
 import com.obd.comm.CommandResponse;
 import com.obd.comm.SimulatedSender;
+import com.obd.comm.sender.OBDSender;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
@@ -14,9 +15,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SimulatedExample {
+
+    /*
+     * This example demonstrates how to use the SimulatedSender class to simulate a
+     * "scanner" communicating with an "OBD-II capable ECU".
+     * The Sender makes the command requests, simulates the stream and the corresponding
+     * response class provides the default response.
+     * The Command <-> Response switch statement can be found in AbstractOBDSender class.
+     */
     public static void main(String[] args) {
 
-        SimulatedSender sender = new SimulatedSender();
+        OBDSender sender = new SimulatedSender();
 
         // Only simulated, code does nothing
         if (!sender.startConnection()) {
