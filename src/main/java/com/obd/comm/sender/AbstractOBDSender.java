@@ -1,7 +1,7 @@
 package com.obd.comm.sender;
 
 import com.obd.agnx.response.common.*;
-import com.obd.comm.model.CommandResponse;
+import com.obd.comm.CommandResponse;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
@@ -35,6 +35,7 @@ public abstract class AbstractOBDSender implements OBDSender {
 
     /**
      * Abstract method to get the input stream from the OBD device.
+     *
      * @return InputStream from the OBD device.
      * @throws IOException if an I/O error occurs.
      */
@@ -42,6 +43,7 @@ public abstract class AbstractOBDSender implements OBDSender {
 
     /**
      * Abstract method to get the output stream to the OBD device.
+     *
      * @return OutputStream to the OBD device.
      * @throws IOException if an I/O error occurs.
      */
@@ -49,6 +51,7 @@ public abstract class AbstractOBDSender implements OBDSender {
 
     /**
      * Abstract method to close the connection to the OBD device.
+     *
      * @throws IOException if an I/O error occurs.
      */
     protected abstract void closeConnection() throws IOException;
@@ -77,6 +80,7 @@ public abstract class AbstractOBDSender implements OBDSender {
 
     /**
      * Sends a list of OBD commands to the device and stores their responses.
+     *
      * @param commands List of OBD commands to be sent.
      */
     @Override
@@ -107,6 +111,7 @@ public abstract class AbstractOBDSender implements OBDSender {
 
     /**
      * Executes a single OBD command and returns its response.
+     *
      * @param command The OBD command to be executed.
      * @return CommandResponse containing the result of the command.
      */
@@ -124,6 +129,7 @@ public abstract class AbstractOBDSender implements OBDSender {
 
     /**
      * Returns the list of command responses.
+     *
      * @return List of CommandResponse objects.
      */
     @Override
@@ -131,29 +137,32 @@ public abstract class AbstractOBDSender implements OBDSender {
         return commandResponses;
     }
 
-    private String generateResponse(ObdCommand command) {
-        if (command instanceof DistanceSinceCCCommand) {
-            return new DistanceSinceCCResponse().getDefaultResponse();
-        } else if (command instanceof TroubleCodesCommand) {
-            return new TroubleCodesResponse().getDefaultResponse();
-        } else if (command instanceof PermanentTroubleCodesCommand) {
-            return "43 00 00 00 00 00 00"; // Simulated response for PermanentTroubleCodesCommand
-        } else if (command instanceof RPMCommand) {
-            return new RPMResponse().getDefaultResponse(); // Example RPM response
-        } else if (command instanceof VinCommand) {
-            return new VinResponse().getDefaultResponse(); // Example VIN response
-        } else if (command instanceof FuelLevelCommand) {
-            return "41 2F 64"; // Example Fuel Level response
-        } else if (command instanceof EngineCoolantTemperatureCommand) {
-            return new EngineCoolantTemperatureResponse().getDefaultResponse();
-        } else if (command instanceof AvailablePidsCommand_01_20) {
-            return "41 00 BE 3E B8 13"; // Example Available PIDs response
-        } else if (command instanceof DtcNumberCommand) {
-            return new DtcNumberResponse().getDefaultResponse();
-        } else if (command instanceof ObdRawCommand) {
-            return "NO DATA"; // Generic response for raw commands
-        } else {
-            return "NO DATA"; // Default response for unknown commands
-        }
+
+    protected String generateResponse(ObdCommand command) {
+        return switch (command) {
+            case DistanceSinceCCCommand distanceSinceCCCommand -> new DistanceSinceCCResponse().getDefaultResponse();
+
+            case TroubleCodesCommand troubleCodesCommand -> new TroubleCodesResponse().getDefaultResponse();
+
+            case PermanentTroubleCodesCommand permanentTroubleCodesCommand -> new PermanentTroubleCodesResponse().getDefaultResponse();
+
+            case RPMCommand rpmCommand -> new RPMResponse().getDefaultResponse();
+
+            case VinCommand vinCommand -> new VinResponse().getDefaultResponse();
+
+            case FuelLevelCommand fuelLevelCommand -> "41 2F 64";
+
+            case EngineCoolantTemperatureCommand engineCoolantTemperatureCommand ->
+                    new EngineCoolantTemperatureResponse().getDefaultResponse();
+
+            case AvailablePidsCommand_01_20 availablePidsCommand0120 -> "41 00 BE 3E B8 13";
+
+            case DtcNumberCommand dtcNumberCommand -> new DtcNumberResponse().getDefaultResponse();
+
+            case ObdRawCommand obdRawCommand -> "NO DATA";
+
+            case null, default -> "NO DATA"; // Default response for unknown commands
+
+        };
     }
 }

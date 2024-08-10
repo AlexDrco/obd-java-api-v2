@@ -1,7 +1,6 @@
 package com.obd.comm;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.obd.agnx.response.OBDResponseHandler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,14 +12,12 @@ public class SerialPortListener {
     private final SerialPort serialPort;
     private BufferedReader inputReader;
     private OutputStream outputStream;
-    private final OBDResponseHandler obdResponseHandler;
 
     public SerialPortListener(String portName) {
         serialPort = SerialPort.getCommPort(portName);
         serialPort.setBaudRate(38400);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 10000, 10000);
 
-        obdResponseHandler = new OBDResponseHandler();
 
         if (serialPort.openPort()) {
             System.out.println("Port opened successfully.");
@@ -53,7 +50,7 @@ public class SerialPortListener {
 
     private String handleRequest(String request) {
         // Use ObdResponseHandler to get the appropriate response
-        return obdResponseHandler.getResponse(request);
+        return null;
     }
 
 }

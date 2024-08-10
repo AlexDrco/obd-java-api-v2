@@ -1,4 +1,4 @@
-package com.obd.comm.model;
+package com.obd.comm;
 
 public class CommandResponse {
     private final String command;

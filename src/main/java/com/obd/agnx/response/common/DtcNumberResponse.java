@@ -10,7 +10,7 @@ public class DtcNumberResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "41 01 01 00 00 00"; // Example DTC number response
+        return "41 01 02 03 00 04 20"; // Example DTC number response with P0300 and P0420
     }
 
     @Override

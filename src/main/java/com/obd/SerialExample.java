@@ -2,7 +2,7 @@ package com.obd;
 
 import com.obd.comm.sender.OBDSender;
 import com.obd.comm.SerialPortSender;
-import com.obd.comm.model.CommandResponse;
+import com.obd.comm.CommandResponse;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
@@ -13,7 +13,8 @@ import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 import java.util.Arrays;
 import java.util.List;
 
-public class BasicMain {
+public class SerialExample {
+
     public static void main(String[] args) {
 
         OBDSender sender = new SerialPortSender("COM5");

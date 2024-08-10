@@ -14,7 +14,7 @@ public class EngineCoolantTemperatureResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "41 05 5A"; // 90°C
+        return "41 05 5A"; // 50°C
     }
 
     @Override

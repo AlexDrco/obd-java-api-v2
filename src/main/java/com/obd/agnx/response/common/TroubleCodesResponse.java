@@ -10,7 +10,7 @@ public class TroubleCodesResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "43 00 00 00 00 00 00"; // No error codes
+        return "43 01 03 00 04 20"; // No error codes
     }
 
     @Override

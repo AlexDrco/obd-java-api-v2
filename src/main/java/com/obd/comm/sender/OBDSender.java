@@ -1,6 +1,6 @@
 package com.obd.comm.sender;
 
-import com.obd.comm.model.CommandResponse;
+import com.obd.comm.CommandResponse;
 import com.obd.pires.commands.ObdCommand;
 
 import java.util.List;
