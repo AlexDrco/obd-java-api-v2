@@ -39,8 +39,7 @@ pending
 ### Example ###
 
 * The following example was tested using [OBD-II] <-> [ELM327 v1.1] <-> [RS232] <-> [USB] serial comm.
-* (It was tested on Ford Ranger 1999, Toyota Raize 2024, Jeep Liberty 2006)
-* (Hardware was what I had available)
+* It was successfully tested on Ford Ranger 1999, Toyota Raize 2024, Jeep Liberty 2006.
 ```
         OBDSender sender = new SerialPortSender("COM5");
 
