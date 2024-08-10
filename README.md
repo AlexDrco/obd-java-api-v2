@@ -1,7 +1,7 @@
 obd-java-api-v2
 ============
 
-Extending Pires OBD-II Java API to simulate a vehicle ECU.
+Extends Pires OBD-II Java API and simulate vehicle ECU responses.
 
 ## NOTICE
 
@@ -10,7 +10,7 @@ Extending Pires OBD-II Java API to simulate a vehicle ECU.
 Before opening an issue or using this, understand that this is a fork of the original [obd-java-api] and:
 
 * Familiarize yourself with the *OBD-II standard*
-* Familiarize yourself with the *[ELM327]* chip.
+* Familiarize yourself with the *[ELM327]* chip implementations (Serial, Bluetooth, Wi-Fi, etc.).
 
 ## Build ##
 
@@ -38,9 +38,9 @@ pending
 
 ### Example ###
 
-The following example was tested using [OBD-II] <-> [ELM327] <-> [RS232] <-> [USB] serial comm.
-(It was tested on Ford Ranger 1999, Toyota Raize 2024, Jeep Liberty 2006)
-(Hardware was what I had available, so it may not be the best choice for your application)
+* The following example was tested using [OBD-II] <-> [ELM327 v1.1] <-> [RS232] <-> [USB] serial comm.
+* (It was tested on Ford Ranger 1999, Toyota Raize 2024, Jeep Liberty 2006)
+* (Hardware was what I had available)
 ```
         OBDSender sender = new SerialPortSender("COM5");
 
@@ -74,11 +74,13 @@ The following example was tested using [OBD-II] <-> [ELM327] <-> [RS232] <-> [US
 
 ## Troubleshooting ##
 
-As *@dembol* noted:
+As noted in original [obd-java-api]:
 
-Have you checked your ELM327 adapter with Torque or Scanmaster to see if it works with your car? Maybe the problem is with your device?
+Test your ELM327 device with ScanMaster for serial or some app for bluetooth to see if it works with your car.
 
 Popular OBD diagnostic tools reset state and disable echo, spaces etc before protocol selection. Download some ELM327 terminal for android and try following commands in order:
+
+Note: AT S0 caused my ELM327 v1.1 device to stop responding, not using that command solved the issue.
 ```
 ATD
 ATZ
