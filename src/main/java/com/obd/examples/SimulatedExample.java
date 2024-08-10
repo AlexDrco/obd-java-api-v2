@@ -1,4 +1,4 @@
-package com.obd;
+package com.obd.examples;
 
 import com.obd.comm.CommandResponse;
 import com.obd.comm.SimulatedSender;
