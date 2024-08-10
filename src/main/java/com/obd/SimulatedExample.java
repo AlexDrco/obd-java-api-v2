@@ -18,11 +18,13 @@ public class SimulatedExample {
 
         SimulatedSender sender = new SimulatedSender();
 
+        // Only simulated, code does nothing
         if (!sender.startConnection()) {
             System.err.println("Failed to simulate start connection.");
             return;
         }
 
+        // Only simulated, code does nothing
         sender.setupEML327();
 
         List<ObdCommand> commands = Arrays.asList(
