@@ -10,7 +10,7 @@ public class DistanceSinceCCResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "41 31 00 00"; // 0 km
+        return "41 31 04 D2"; // 1234 km
     }
 
     @Override
@@ -19,7 +19,16 @@ public class DistanceSinceCCResponse extends OBDResponse {
     }
 
     @Override
+    public String getSimulatedResponse() {
+        return getDefaultResponse();
+    }
+
+    @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse(); // Distance does not vary
+        return getDefaultResponse();
+    }
+
+    public String getNoKmResponse() {
+        return "41 31 00 00"; // 0 km
     }
 }

@@ -2,12 +2,11 @@ package com.obd.examples;
 
 import com.obd.comm.CommandResponse;
 import com.obd.comm.SimulatedSender;
-import com.obd.comm.sender.OBDSender;
+import com.obd.comm.sender.AbstractOBDSender;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
 import com.obd.pires.commands.fuel.FuelLevelCommand;
-import com.obd.pires.commands.protocol.AvailablePidsCommand_01_20;
 import com.obd.pires.commands.protocol.ObdRawCommand;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
@@ -25,7 +24,7 @@ public class SimulatedExample {
      */
     public static void main(String[] args) {
 
-        OBDSender sender = new SimulatedSender();
+        AbstractOBDSender sender = new SimulatedSender();
 
         // Only simulated, code does nothing
         if (!sender.startConnection()) {
@@ -44,7 +43,6 @@ public class SimulatedExample {
                 new VinCommand(),
                 new FuelLevelCommand(),
                 new EngineCoolantTemperatureCommand(),
-                new AvailablePidsCommand_01_20(),
                 new DtcNumberCommand(),
                 new ObdRawCommand("01 03")
         );

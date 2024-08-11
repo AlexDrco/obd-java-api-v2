@@ -19,6 +19,11 @@ public class VinResponse extends OBDResponse {
     }
 
     @Override
+    public String getSimulatedResponse() {
+        return getDefaultResponse();
+    }
+
+    @Override
     public String getSimulatedResponse(String initialValue) {
         return getDefaultResponse(); // VIN does not vary
     }

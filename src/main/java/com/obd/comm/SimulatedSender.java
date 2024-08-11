@@ -3,6 +3,7 @@ package com.obd.comm;
 import com.obd.comm.sender.AbstractOBDSender;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.exceptions.NoDataException;
+import com.obd.agnx.response.OBDResponse;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,16 +13,15 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * Simulates the behavior of an OBD sender.
- * It extends the AbstractOBDSender class and overrides methods to provide
- * simulated input and output streams, as well as handling the sending of OBD commands.
+ * Simulates sending OBD commands and receiving responses.
+ * It extends AbstractOBDSender and overrides methods to provide simulated input and output streams.
  */
 public class SimulatedSender extends AbstractOBDSender {
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private ByteArrayInputStream inputStream = new ByteArrayInputStream(new byte[0]);
 
     /**
-     * Returns the input stream for the simulated sender.
+     * Gets the input stream for communication with the simulated OBD device.
      *
      * @return the input stream
      * @throws IOException if an I/O error occurs
@@ -32,7 +32,7 @@ public class SimulatedSender extends AbstractOBDSender {
     }
 
     /**
-     * Returns the output stream for the simulated sender.
+     * Gets the output stream for communication with the simulated OBD device.
      *
      * @return the output stream
      * @throws IOException if an I/O error occurs
@@ -43,7 +43,7 @@ public class SimulatedSender extends AbstractOBDSender {
     }
 
     /**
-     * Closes the connection for the simulated sender.
+     * Closes the connection to the simulated OBD device.
      *
      * @throws IOException if an I/O error occurs
      */
@@ -53,9 +53,9 @@ public class SimulatedSender extends AbstractOBDSender {
     }
 
     /**
-     * Starts the connection for the simulated sender.
+     * Simulates starting a connection to the OBD device.
      *
-     * @return true if the connection is successfully started, false otherwise
+     * @return true indicating the connection was successfully started
      */
     @Override
     public boolean startConnection() {
@@ -64,14 +64,14 @@ public class SimulatedSender extends AbstractOBDSender {
     }
 
     /**
-     * Simulates the Streams Sends a list of OBD commands
-     * and processes their responses.
+     * Sends a list of OBD commands to the simulated device and processes the responses.
+     *
      * @param commands the list of OBD commands to send
      */
     @Override
     public void sendCommands(List<ObdCommand> commands) {
         for (ObdCommand command : commands) {
-            String response = generateResponse(command);
+            String response = OBDResponse.generateDefaultResponse(command);
             inputStream = new ByteArrayInputStream(response.getBytes());
             try {
                 command.run(getInputStream(), getOutputStream());

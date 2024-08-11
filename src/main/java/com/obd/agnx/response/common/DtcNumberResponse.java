@@ -19,7 +19,16 @@ public class DtcNumberResponse extends OBDResponse {
     }
 
     @Override
+    public String getSimulatedResponse() {
+        return getDefaultResponse();
+    }
+
+    @Override
     public String getSimulatedResponse(String initialValue) {
         return getDefaultResponse(); // DTC number does not vary
+    }
+
+    public String getNoErrorResponse(){
+        return "43 00 00 00 00 00";
     }
 }

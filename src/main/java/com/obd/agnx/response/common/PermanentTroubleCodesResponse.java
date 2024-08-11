@@ -10,7 +10,7 @@ public class PermanentTroubleCodesResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "00 00 00 00"; // No trouble codes
+        return "43 01 01 33 42 02"; // Example: P0133, C0202
     }
 
     @Override
@@ -19,7 +19,16 @@ public class PermanentTroubleCodesResponse extends OBDResponse {
     }
 
     @Override
+    public String getSimulatedResponse() {
+        return getDefaultResponse();
+    }
+
+    @Override
     public String getSimulatedResponse(String initialValue) {
         return getDefaultResponse(); // Permanent trouble codes do not vary
+    }
+
+    public String getNoErrorResponse(){
+        return "00 00 00 00";
     }
 }

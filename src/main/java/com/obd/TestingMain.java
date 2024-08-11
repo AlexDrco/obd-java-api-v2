@@ -1,69 +1,80 @@
 package com.obd;
 
-import com.obd.pires.commands.control.VinCommand;
-import com.obd.pires.commands.protocol.EchoOffCommand;
-import com.obd.pires.commands.protocol.LineFeedOffCommand;
-import com.obd.pires.commands.protocol.SelectProtocolCommand;
-import com.obd.pires.commands.protocol.TimeoutCommand;
-import com.obd.pires.commands.temperature.AmbientAirTemperatureCommand;
+import com.fazecast.jSerialComm.SerialPort;
+import com.obd.pires.commands.ObdCommand;
+import com.obd.pires.commands.control.*;
+import com.obd.pires.commands.engine.RPMCommand;
+import com.obd.pires.commands.fuel.FuelLevelCommand;
+import com.obd.pires.commands.protocol.*;
+import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 import com.obd.pires.enums.ObdProtocols;
+import com.obd.pires.exceptions.NoDataException;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestingMain {
-
     public static void main(String[] args) {
+        SerialPort[] commPorts = SerialPort.getCommPorts();
+        Arrays.stream(commPorts).forEach(System.out::println);
+        SerialPort comPort = commPorts[2];
+        System.out.println("Connected to: " + comPort.getSystemPortName());
+        comPort.setBaudRate(38400);
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 10000, 10000);
 
-        // Mock input stream with some data
-        String inputData = "01 46 02 01 1A";
-        InputStream inStream = new ByteArrayInputStream(inputData.getBytes());
-
-        // Mock output stream
-        OutputStream outStream = new ByteArrayOutputStream();
-
-
-
-        // Execute commands
-        try {
-            new EchoOffCommand().run(inStream, outStream);
-            new LineFeedOffCommand().run(inStream, outStream);
-            new TimeoutCommand(125).run(inStream, outStream);
-            new SelectProtocolCommand(ObdProtocols.AUTO).run(inStream, outStream);
-
-            // Mock input stream with some data
-            byte[] vinData = new byte[]{
-                    '4', '9', ' ', '0', '2', ' ', '0', '1', ' ', '0', '0', ' ', '0', '0', ' ', '0', '0', ' ', '5', '7', '\n',
-                    '4', '9', ' ', '0', '2', ' ', '0', '2', ' ', '5', '0', ' ', '3', '0', ' ', '5', 'A', ' ', '5', 'A', '\n',
-                    '4', '9', ' ', '0', '2', ' ', '0', '3', ' ', '5', 'A', ' ', '3', '9', ' ', '3', '9', ' ', '5', 'A', '\n',
-                    '4', '9', ' ', '0', '2', ' ', '0', '4', ' ', '5', '4', ' ', '5', '3', ' ', '3', '3', ' ', '3', '9', '\n',
-                    '4', '9', ' ', '0', '2', ' ', '0', '5', ' ', '3', '2', ' ', '3', '1', ' ', '3', '2', ' ', '3', '4', '>'
-            };
-            inStream = new ByteArrayInputStream(vinData);
-            VinCommand vinCommand = new VinCommand();
-            vinCommand.run(inStream, outStream);
-            System.out.println("VIN: " + vinCommand.getFormattedResult());
-
-            String vinData2 = "4902010000005749020250305A5A4902035A39395A4902045453333949020532313234";
-            inStream = new ByteArrayInputStream(vinData2.getBytes());
-            vinCommand.run(inStream, outStream);
-            System.out.println("VIN: " + vinCommand.getFormattedResult());
-
-            // Mock data for AmbientAirTemperatureCommand
-            String temperatureData = "41 46 42";
-            inStream = new ByteArrayInputStream(temperatureData.getBytes());
-            AmbientAirTemperatureCommand ambientAirTemperatureCommand = new AmbientAirTemperatureCommand();
-            ambientAirTemperatureCommand.run(inStream, outStream);
-
-            System.out.println(ambientAirTemperatureCommand.getFormattedResult());
-
-            // Use ECU Simulator to generate responses
-            String request = "010C"; // Example request for Engine RPM
-
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        if (comPort.openPort()) {
+            System.out.println("Port opened successfully.");
+        } else {
+            System.out.println("Failed to open port.");
+            return;
         }
 
-        // Print the output stream
-        System.out.println(outStream.toString());
+        try {
+            // Setup ELM327
+            new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+            new EchoOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+            new LineFeedOffCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+            new TimeoutCommand(5000).run(comPort.getInputStream(), comPort.getOutputStream());
+            new SelectProtocolCommand(ObdProtocols.AUTO).run(comPort.getInputStream(), comPort.getOutputStream());
+
+            // List of commands to execute
+            List<ObdCommand> commands = Arrays.asList(
+                    new DistanceSinceCCCommand(),
+                    new TroubleCodesCommand(),
+                    new PermanentTroubleCodesCommand(),
+                    new RPMCommand(),
+                    new VinCommand(),
+                    new FuelLevelCommand(),
+                    new EngineCoolantTemperatureCommand(),
+                    new AvailablePidsCommand_01_20(),
+                    new DtcNumberCommand(),
+                    new ObdRawCommand("01 03")
+            );
+
+            // Execute each command
+            for (ObdCommand command : commands) {
+                executeCommand(command, comPort);
+            }
+
+            new ObdResetCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+            new CloseCommand().run(comPort.getInputStream(), comPort.getOutputStream());
+
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Exception occurred: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            comPort.closePort();
+            System.out.println("Port closed.");
+        }
+    }
+
+    private static void executeCommand(ObdCommand command, SerialPort comPort) {
+        try {
+            command.run(comPort.getInputStream(), comPort.getOutputStream());
+            System.out.println(command.getName() + ": " + command.getFormattedResult());
+        } catch (IOException | InterruptedException | NoDataException | NumberFormatException e) {
+            System.err.println("Failed to execute " + command.getName() + ": " + e.getMessage());
+        }
     }
 }

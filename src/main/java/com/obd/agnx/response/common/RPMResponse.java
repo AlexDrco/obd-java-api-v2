@@ -25,6 +25,15 @@ public class RPMResponse extends OBDResponse {
     }
 
     @Override
+    public String getSimulatedResponse() {
+        String initialValue = "41 0C 0A F0";
+        noiseSeed += 0.1;
+        int baseRpm = Integer.parseInt(initialValue, 16);
+        int rpm = baseRpm + (int) (perlinNoise.noise(noiseSeed) * 100); // Variation around initial value using Perlin noise
+        return String.format("41 0C %04X", rpm);
+    }
+
+    @Override
     public String getSimulatedResponse(String initialValue) {
         noiseSeed += 0.1;
         int baseRpm = Integer.parseInt(initialValue, 16);

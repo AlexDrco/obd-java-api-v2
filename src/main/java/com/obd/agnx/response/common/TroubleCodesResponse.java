@@ -19,7 +19,16 @@ public class TroubleCodesResponse extends OBDResponse {
     }
 
     @Override
+    public String getSimulatedResponse() {
+        return getDefaultResponse();
+    }
+
+    @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse(); // Trouble codes do not vary
+        return getDefaultResponse();
+    }
+
+    public String getNoErrorResponse(){
+        return "43 00 00 00 00 00";
     }
 }
