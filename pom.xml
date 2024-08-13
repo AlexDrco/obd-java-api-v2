@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.obd</groupId>
-    <artifactId>obd-java-interface</artifactId>
+    <groupId>com.agnx</groupId>
+    <artifactId>obd-java-api-v2</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>OBD JAVA INTERFACE</name>
+    <name>OBD JAVA API V2</name>
     <description>Updated OBD-java-api with ECU response simulator.</description>
 
     <licenses>
@@ -79,6 +79,14 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

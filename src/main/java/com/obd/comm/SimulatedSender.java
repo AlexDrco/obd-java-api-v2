@@ -75,6 +75,7 @@ public class SimulatedSender extends AbstractOBDSender {
             inputStream = new ByteArrayInputStream(response.getBytes());
             try {
                 command.run(getInputStream(), getOutputStream());
+                System.out.println("Raw response: " + command.getRawHexString());
                 commandResponses.add(new CommandResponse(command.getName(), command.getFormattedResult()));
             } catch (IOException | InterruptedException | NoDataException | NumberFormatException e) {
                 commandResponses.add(new CommandResponse(command.getName(), "Error: " + e.getMessage()));

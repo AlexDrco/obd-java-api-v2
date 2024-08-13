@@ -114,6 +114,7 @@ public abstract class AbstractOBDSender implements OBDSender {
         try {
             command.run(getInputStream(), getOutputStream());
             String response = command.getFormattedResult();
+            System.out.println("Raw response: " + command.getRawHexString());
             System.out.println(command.getName() + ": " + response);
             return new CommandResponse(command.getName(), response);
         } catch (IOException | InterruptedException | NoDataException | NumberFormatException e) {

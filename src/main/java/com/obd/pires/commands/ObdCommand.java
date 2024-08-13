@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
  */
 public abstract class ObdCommand {
 
+    private String rawHexString;
     /**
      * Error classes to be tested in order
      */
@@ -226,6 +227,8 @@ public abstract class ObdCommand {
      */
         //kills multiline.. rawData = rawData.substring(rawData.lastIndexOf(13) + 1);
         rawData = removeAll(WHITESPACE_PATTERN, rawData);//removes all [ \t\n\x0B\f\r]
+
+        rawHexString = rawData;
     }
 
     void checkForErrors() {
@@ -388,6 +391,15 @@ public abstract class ObdCommand {
         } else {
             return cmd;
         }
+    }
+
+    /**
+     * <p>getRawResult.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
+    public String getRawHexString() {
+        return rawHexString;
     }
 
     @Override

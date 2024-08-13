@@ -2,8 +2,8 @@ package com.obd.agnx.vin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class VinDecoder {
@@ -14,9 +14,14 @@ public class VinDecoder {
     static {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            List<WmiData> wmiDataList = mapper.readValue(new File("src/main/resources/wmi.json"), mapper.getTypeFactory().constructCollectionType(List.class, WmiData.class));
-            for (WmiData wmiData : wmiDataList) {
-                wmiMap.put(wmiData.getWmi(), wmiData.getManufacturer());
+            InputStream inputStream = VinDecoder.class.getClassLoader().getResourceAsStream("wmi.json");
+            if (inputStream != null) {
+                List<WmiData> wmiDataList = mapper.readValue(inputStream, mapper.getTypeFactory().constructCollectionType(List.class, WmiData.class));
+                for (WmiData wmiData : wmiDataList) {
+                    wmiMap.put(wmiData.getWmi(), wmiData.getManufacturer());
+                }
+            } else {
+                throw new IOException("Resource not found: wmi.json");
             }
         } catch (IOException e) {
             e.printStackTrace();
