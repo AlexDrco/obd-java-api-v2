@@ -4,7 +4,9 @@ import com.obd.agnx.response.common.*;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
+import com.obd.pires.commands.engine.RuntimeCommand;
 import com.obd.pires.commands.fuel.FuelLevelCommand;
+import com.obd.pires.commands.pressure.EvapVpCommand;
 import com.obd.pires.commands.protocol.*;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
@@ -72,13 +74,20 @@ public abstract class OBDResponse {
         return switch (command) {
             case DistanceSinceCCCommand distanceSinceCCCommand -> new DistanceSinceCCResponse().getDefaultResponse();
             case TroubleCodesCommand troubleCodesCommand -> new TroubleCodesResponse().getDefaultResponse();
-            case PermanentTroubleCodesCommand permanentTroubleCodesCommand -> new PermanentTroubleCodesResponse().getDefaultResponse();
+            case PermanentTroubleCodesCommand permanentTroubleCodesCommand ->
+                    new PermanentTroubleCodesResponse().getDefaultResponse();
             case RPMCommand rpmCommand -> new RPMResponse().getDefaultResponse();
             case VinCommand vinCommand -> new VinResponse().getDefaultResponse();
-            case FuelLevelCommand fuelLevelCommand -> "41 2F 64";
-            case EngineCoolantTemperatureCommand engineCoolantTemperatureCommand -> new EngineCoolantTemperatureResponse().getDefaultResponse();
+            case FuelLevelCommand fuelLevelCommand -> new FuelLevelResponse().getDefaultResponse();
+            case EngineCoolantTemperatureCommand engineCoolantTemperatureCommand ->
+                    new EngineCoolantTemperatureResponse().getDefaultResponse();
             case DtcNumberCommand dtcNumberCommand -> new DtcNumberResponse().getDefaultResponse();
             case ObdRawCommand obdRawCommand -> "NO DATA";
+            case RuntimeCommand runtimeCommand -> new RuntimeResponse().getDefaultResponse();
+            case DistanceMILOnCommand distanceMILOnCommand -> new DistanceMILOnResponse().getDefaultResponse();
+            case WarmUpCyclesSinceDtcClrCommand warmUpCyclesSinceDtcClrCommand ->
+                    new WarmUpCyclesSinceDtcClrResponse().getDefaultResponse();
+            case EvapVpCommand evapVpCommand -> new EvapVpResponse().getDefaultResponse();
             case null, default -> "NO DATA";
         };
     }
@@ -93,14 +102,21 @@ public abstract class OBDResponse {
         return switch (command) {
             case DistanceSinceCCCommand distanceSinceCCCommand -> new DistanceSinceCCResponse().getSimulatedResponse();
             case TroubleCodesCommand troubleCodesCommand -> new TroubleCodesResponse().getSimulatedResponse();
-            case PermanentTroubleCodesCommand permanentTroubleCodesCommand -> new PermanentTroubleCodesResponse().getSimulatedResponse();
+            case PermanentTroubleCodesCommand permanentTroubleCodesCommand ->
+                    new PermanentTroubleCodesResponse().getSimulatedResponse();
             case RPMCommand rpmCommand -> new RPMResponse().getSimulatedResponse();
             case VinCommand vinCommand -> new VinResponse().getSimulatedResponse();
             case FuelLevelCommand fuelLevelCommand -> "41 2F 64";
-            case EngineCoolantTemperatureCommand engineCoolantTemperatureCommand -> new EngineCoolantTemperatureResponse().getSimulatedResponse();
+            case EngineCoolantTemperatureCommand engineCoolantTemperatureCommand ->
+                    new EngineCoolantTemperatureResponse().getSimulatedResponse();
             case AvailablePidsCommand_01_20 availablePidsCommand0120 -> "41 00 BE 3E B8 13";
             case DtcNumberCommand dtcNumberCommand -> new DtcNumberResponse().getSimulatedResponse();
             case ObdRawCommand obdRawCommand -> "NO DATA";
+            case RuntimeCommand runtimeCommand -> new RuntimeResponse().getSimulatedResponse();
+            case DistanceMILOnCommand distanceMILOnCommand -> new DistanceMILOnResponse().getSimulatedResponse();
+            case WarmUpCyclesSinceDtcClrCommand warmUpCyclesSinceDtcClrCommand ->
+                    new WarmUpCyclesSinceDtcClrResponse().getSimulatedResponse();
+            case EvapVpCommand evapVpCommand -> new EvapVpResponse().getSimulatedResponse();
             case null, default -> "NO DATA";
         };
     }

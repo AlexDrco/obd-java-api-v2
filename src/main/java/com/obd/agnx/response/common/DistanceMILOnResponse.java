@@ -2,20 +2,20 @@ package com.obd.agnx.response.common;
 
 import com.obd.agnx.response.OBDResponse;
 
-public class DtcNumberResponse extends OBDResponse {
+public class DistanceMILOnResponse extends OBDResponse {
 
-    public DtcNumberResponse() {
-        super("0101");
+    public DistanceMILOnResponse() {
+        super("01 21");
     }
 
     @Override
     public String getDefaultResponse() {
-        return "41 01 81 02 03 00 04 20"; // Example DTC number response with P0300 and P0420, MIL ON
+        return "41 21 00 10"; // Default response with 16 km
     }
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // DTC number does not vary
+        return getDefaultResponse(); // Simulated response with 0 km
     }
 
     @Override
@@ -25,10 +25,10 @@ public class DtcNumberResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse(); // DTC number does not vary
+        return getDefaultResponse();
     }
 
     public String getNoErrorResponse(){
-        return "43 00 00 00 00 00"; // MIL OFF, no error codes
+        return "41 21 00 00";
     }
 }
