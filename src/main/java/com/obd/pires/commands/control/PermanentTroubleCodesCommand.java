@@ -139,7 +139,7 @@ public class PermanentTroubleCodesCommand extends ObdCommand {
         }
 
         rawData = res.toString().trim();
-
+        setRawHexString(rawData);
     }
 
     /** {@inheritDoc} */
