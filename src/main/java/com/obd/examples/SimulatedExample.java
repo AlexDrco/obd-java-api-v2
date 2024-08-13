@@ -1,6 +1,6 @@
 package com.obd.examples;
 
-import com.obd.comm.CommandResponse;
+import com.obd.comm.CommandResponseRaw;
 import com.obd.comm.SimulatedSender;
 import com.obd.comm.sender.AbstractOBDSender;
 import com.obd.pires.commands.ObdCommand;
@@ -9,7 +9,6 @@ import com.obd.pires.commands.engine.RPMCommand;
 import com.obd.pires.commands.engine.RuntimeCommand;
 import com.obd.pires.commands.fuel.FuelLevelCommand;
 import com.obd.pires.commands.pressure.EvapVpCommand;
-import com.obd.pires.commands.protocol.ObdRawCommand;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
 import java.util.Arrays;
@@ -60,9 +59,9 @@ public class SimulatedExample {
 
         sender.sendCommands(commands);
 
-        List<CommandResponse> responses = sender.getCommandResponses();
-        for (CommandResponse response : responses) {
-            System.out.println("Command: " + response.getCommand() + ", Response: " + response.getResponse());
+        List<CommandResponseRaw> responses = sender.getCommandResponses();
+        for (CommandResponseRaw response : responses) {
+            System.out.println("Command: " + response.getCommand() + ", Response: " + response.getResponse() + ", Raw: " + response.getRaw());
         }
     }
 }

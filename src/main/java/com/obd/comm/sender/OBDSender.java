@@ -1,6 +1,6 @@
 package com.obd.comm.sender;
 
-import com.obd.comm.CommandResponse;
+import com.obd.comm.CommandResponseRaw;
 import com.obd.pires.commands.ObdCommand;
 
 import java.util.List;
@@ -33,5 +33,5 @@ public interface OBDSender {
      * Returns the list of command responses.
      * @return List of CommandResponse objects.
      */
-    List<CommandResponse> getCommandResponses();
+    List<CommandResponseRaw> getCommandResponses();
 }

@@ -1,12 +1,14 @@
 package com.obd.comm;
 
-public class CommandResponse {
+public class CommandResponseRaw {
     private final String command;
     private final String response;
+    private final String raw;
 
-    public CommandResponse(String command, String response) {
+    public CommandResponseRaw(String command, String response, String raw) {
         this.command = command;
         this.response = response;
+        this.raw = raw;
     }
 
     public String getCommand() {
@@ -15,5 +17,9 @@ public class CommandResponse {
 
     public String getResponse() {
         return response;
+    }
+
+    public String getRaw() {
+        return raw;
     }
 }

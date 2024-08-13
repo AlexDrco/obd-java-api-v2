@@ -2,7 +2,7 @@ package com.obd.examples;
 
 import com.obd.comm.sender.OBDSender;
 import com.obd.comm.SerialPortSender;
-import com.obd.comm.CommandResponse;
+import com.obd.comm.CommandResponseRaw;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
@@ -41,9 +41,9 @@ public class SerialExample {
 
         sender.sendCommands(commands);
 
-        List<CommandResponse> responses = sender.getCommandResponses();
-        for (CommandResponse response : responses) {
-            System.out.println("Command: " + response.getCommand() + ", Response: " + response.getResponse());
+        List<CommandResponseRaw> responses = sender.getCommandResponses();
+        for (CommandResponseRaw response : responses) {
+            System.out.println("Command: " + response.getCommand() + ", Response: " + response.getResponse() + ", Raw: " + response.getRaw());
         }
     }
 }

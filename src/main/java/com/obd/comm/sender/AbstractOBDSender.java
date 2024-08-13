@@ -1,6 +1,6 @@
 package com.obd.comm.sender;
 
-import com.obd.comm.CommandResponse;
+import com.obd.comm.CommandResponseRaw;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.protocol.*;
 import com.obd.pires.enums.ObdProtocols;
@@ -17,14 +17,16 @@ import java.util.List;
  * Provides methods to set up the EML327 device and send OBD commands.
  */
 public abstract class AbstractOBDSender implements OBDSender {
-    protected final List<CommandResponse> commandResponses;
+    protected final List<CommandResponseRaw> commandResponsRaws;
+    protected final List<String> hexResponses;
 
     /**
      * Initializes the list of command responses.
      *
      */
     public AbstractOBDSender() {
-        commandResponses = new ArrayList<>();
+        commandResponsRaws = new ArrayList<>();
+        hexResponses = new ArrayList<>();
     }
 
     /**
@@ -86,7 +88,7 @@ public abstract class AbstractOBDSender implements OBDSender {
         }
 
         try {
-            commandResponses.addAll(commands.stream()
+            commandResponsRaws.addAll(commands.stream()
                     .map(this::executeCommand)
                     .toList());
 
@@ -110,16 +112,16 @@ public abstract class AbstractOBDSender implements OBDSender {
      * @param command the OBD command to execute
      * @return the command response
      */
-    private CommandResponse executeCommand(ObdCommand command) {
+    private CommandResponseRaw executeCommand(ObdCommand command) {
         try {
             command.run(getInputStream(), getOutputStream());
             String response = command.getFormattedResult();
-            System.out.println("Raw response: " + command.getRawHexString());
-            System.out.println(command.getName() + ": " + response);
-            return new CommandResponse(command.getName(), response);
+            String rawHex = command.getRawHexString();
+            hexResponses.add(rawHex);
+            return new CommandResponseRaw(command.getName(), command.getFormattedResult(), command.getRawHexString());
         } catch (IOException | InterruptedException | NoDataException | NumberFormatException e) {
             System.err.println("Failed to execute " + command.getName() + ": " + e.getMessage());
-            return new CommandResponse(command.getName(), "Error: " + e.getMessage());
+            return new CommandResponseRaw(command.getName(), "Error: " + e.getMessage(), command.getRawHexString());
         }
     }
 
@@ -129,7 +131,16 @@ public abstract class AbstractOBDSender implements OBDSender {
      * @return the list of command responses
      */
     @Override
-    public List<CommandResponse> getCommandResponses() {
-        return commandResponses;
+    public List<CommandResponseRaw> getCommandResponses() {
+        return commandResponsRaws;
+    }
+
+    /**
+     * Gets the list of raw hex responses.
+     *
+     * @return the list of raw hex responses
+     */
+    public List<String> getHexResponses() {
+        return hexResponses;
     }
 }
