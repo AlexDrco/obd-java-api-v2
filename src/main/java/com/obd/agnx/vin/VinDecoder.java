@@ -14,14 +14,14 @@ public class VinDecoder {
     static {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            InputStream inputStream = VinDecoder.class.getClassLoader().getResourceAsStream("wmi.json");
+            InputStream inputStream = VinDecoder.class.getClassLoader().getResourceAsStream("new-wmi.json");
             if (inputStream != null) {
                 List<WmiData> wmiDataList = mapper.readValue(inputStream, mapper.getTypeFactory().constructCollectionType(List.class, WmiData.class));
                 for (WmiData wmiData : wmiDataList) {
                     wmiMap.put(wmiData.getWmi(), wmiData.getManufacturer());
                 }
             } else {
-                throw new IOException("Resource not found: wmi.json");
+                throw new IOException("Resource not found: new-wmi.json");
             }
         } catch (IOException e) {
             e.printStackTrace();
