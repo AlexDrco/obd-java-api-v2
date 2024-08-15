@@ -28,6 +28,13 @@ public class RuntimeResponse extends OBDResponse {
         return getDefaultResponse();
     }
 
+    @Override
+    public String stringToHex(String response) {
+        int runtime = Integer.parseInt(response);
+        String hexRuntime = Integer.toHexString(runtime).toUpperCase();
+        return "41 1F " + hexRuntime;
+    }
+
     public String getNoErrorResponse(){
         return "41 1F 00 00";
     }

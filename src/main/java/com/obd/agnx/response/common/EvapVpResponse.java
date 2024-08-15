@@ -10,7 +10,7 @@ public class EvapVpResponse extends OBDResponse {
 
     @Override
     public String getDefaultResponse() {
-        return "41 32 00 00"; // Default response with 0 pressure
+        return "41 32 00 10"; // Default response with -4.19inH2O
     }
 
     @Override
@@ -26,6 +26,15 @@ public class EvapVpResponse extends OBDResponse {
     @Override
     public String getSimulatedResponse(String initialValue) {
         return getDefaultResponse();
+    }
+
+    @Override
+    public String stringToHex(String response) {
+        float pressure = Float.parseFloat(response);
+        int rawValue = Math.round((pressure + 8.192f) * 4);
+        String hexValue = String.format("%04X", rawValue);
+
+        return "41 32" + hexValue;
     }
 
     public String getNoErrorResponse(){

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * It is not needed no know how many DTC are stored.
+ * It is not needed to know how many DTC are stored.
  * Because when no DTC are stored response will be NO DATA
  * And where are more messages it will be stored in frames that have 7 bytes.
  * In one frame are stored 3 DTC.

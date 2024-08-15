@@ -28,6 +28,13 @@ public class WarmUpCyclesSinceDtcClrResponse extends OBDResponse {
         return getDefaultResponse();
     }
 
+    @Override
+    public String stringToHex(String response) {
+        int cycleCount = Integer.parseInt(response);
+        String hexCycleCount = String.format("%02X", cycleCount);
+        return "41 30" + hexCycleCount;
+    }
+
     public String getNoCyclesResponse(){
         return "41 30 00";
     }

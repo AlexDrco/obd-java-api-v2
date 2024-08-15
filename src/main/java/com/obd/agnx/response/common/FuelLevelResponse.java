@@ -29,6 +29,13 @@ public class FuelLevelResponse extends OBDResponse {
         return getDefaultResponse();
     }
 
+    @Override
+    public String stringToHex(String response) {
+        float percentage = Float.parseFloat(response);
+        int hexValue = Math.round(percentage * 255 / 100);
+        return "41 2F" + String.format("%02X", hexValue);
+    }
+
     public String getFullFuelLevelResponse(){
         return "41 2F FF"; // Default response with 100% fuel level
     }

@@ -28,6 +28,30 @@ public class PermanentTroubleCodesResponse extends OBDResponse {
         return getDefaultResponse(); // Permanent trouble codes do not vary
     }
 
+    private static final char[] dtcLetters = {'P', 'C', 'B', 'U'};
+
+    @Override
+    public String stringToHex(String response) {
+        String[] codes = response.split(",");
+        StringBuilder hexResponse = new StringBuilder("43");
+        hexResponse.append(String.format("%02X", codes.length));
+
+        for (String code : codes) {
+            char letter = code.charAt(0);
+            int letterIndex = new String(dtcLetters).indexOf(letter);
+            int firstDigit = Character.digit(code.charAt(1), 10);
+            int secondDigit = Character.digit(code.charAt(2), 10);
+            int thirdDigit = Character.digit(code.charAt(3), 10);
+            int fourthDigit = Character.digit(code.charAt(4), 10);
+
+            byte firstByte = (byte) ((letterIndex << 6) | (firstDigit << 4) | secondDigit);
+            hexResponse.append(String.format("%02X", firstByte));
+            hexResponse.append(String.format("%X%X", thirdDigit, fourthDigit));
+        }
+
+        return hexResponse.toString();
+    }
+
     public String getNoErrorResponse(){
         return "00 00 00 00";
     }

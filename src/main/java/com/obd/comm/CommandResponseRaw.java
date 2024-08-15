@@ -11,6 +11,12 @@ public class CommandResponseRaw {
         this.raw = raw;
     }
 
+    public CommandResponseRaw(String response){
+        this.command = null;
+        this.response = response;
+        this.raw = null;
+    }
+
     public String getCommand() {
         return command;
     }

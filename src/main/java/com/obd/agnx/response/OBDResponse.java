@@ -16,6 +16,7 @@ import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
  */
 public abstract class OBDResponse {
     protected String command;
+    protected String response;
 
     /**
      * Constructor for OBDResponse.
@@ -63,6 +64,10 @@ public abstract class OBDResponse {
      * @return the simulated response string
      */
     public abstract String getSimulatedResponse(String initialValue);
+
+
+    public abstract String stringToHex(String response);
+
 
     /**
      * Generates the default response for a given OBD command.

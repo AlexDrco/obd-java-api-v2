@@ -41,6 +41,12 @@ public class RPMResponse extends OBDResponse {
         return String.format("41 0C %04X", rpm);
     }
 
+    @Override
+    public String stringToHex(String response) {
+        Integer rpm = Integer.parseInt(response) * 4;
+        return "41 0C" + String.format("%04X", rpm);
+    }
+
     public String getSimulatedResponseInRange(String initialValue, int lowerLimit, int upperLimit) {
         noiseSeed += 0.1;
         int baseRpm = Integer.parseInt(initialValue, 16);
