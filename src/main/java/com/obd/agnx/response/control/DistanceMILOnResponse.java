@@ -1,21 +1,21 @@
-package com.obd.agnx.response.common;
+package com.obd.agnx.response.control;
 
 import com.obd.agnx.response.OBDResponse;
 
-public class DistanceSinceCCResponse extends OBDResponse {
+public class DistanceMILOnResponse extends OBDResponse {
 
-    public DistanceSinceCCResponse() {
-        super("01 31");
+    public DistanceMILOnResponse() {
+        super("01 21");
     }
 
     @Override
     public String getDefaultResponse() {
-        return "41 31 04 D2"; // 1234 km
+        return "41 21 00 10"; // Default response with 16 km
     }
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Distance does not vary
+        return getDefaultResponse(); // Simulated response with 0 km
     }
 
     @Override
@@ -32,7 +32,7 @@ public class DistanceSinceCCResponse extends OBDResponse {
     public String stringToHex(String response) {
         String[] parts = response.split("(?<=\\d)(?=\\D)");
         if (parts.length != 2) {
-            throw new IllegalArgumentException("Invalid distance format. Provided: " + response);
+            throw new IllegalArgumentException("Invalid distance format. Use '16km' or '10miles'.");
         }
 
         int distance;
@@ -59,10 +59,11 @@ public class DistanceSinceCCResponse extends OBDResponse {
         // Convert the distance to a 2-byte hexadecimal string
         String hexValue = String.format("%04X", distance);
 
-        return "41 31 " + hexValue.substring(0, 2) + " " + hexValue.substring(2, 4);
+
+        return "41 21 " + hexValue.substring(0, 2) + " " + hexValue.substring(2, 4);
     }
 
-    public String getNoKmResponse() {
-        return "41 31 00 00"; // 0 km
+    public String getNoErrorResponse(){
+        return "41 21 00 00";
     }
 }

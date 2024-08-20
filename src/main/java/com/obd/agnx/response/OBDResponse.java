@@ -1,6 +1,11 @@
 package com.obd.agnx.response;
 
-import com.obd.agnx.response.common.*;
+import com.obd.agnx.response.control.*;
+import com.obd.agnx.response.engine.RPMResponse;
+import com.obd.agnx.response.engine.RuntimeResponse;
+import com.obd.agnx.response.fuel.FuelLevelResponse;
+import com.obd.agnx.response.pressure.EvapVpResponse;
+import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.RPMCommand;
@@ -93,6 +98,11 @@ public abstract class OBDResponse {
             case WarmUpCyclesSinceDtcClrCommand warmUpCyclesSinceDtcClrCommand ->
                     new WarmUpCyclesSinceDtcClrResponse().getDefaultResponse();
             case EvapVpCommand evapVpCommand -> new EvapVpResponse().getDefaultResponse();
+            case EquivalentRatioCommand equivalentRatioCommand -> new EquivalentRatioResponse().getDefaultResponse();
+            case IgnitionMonitorCommand ignitionMonitorCommand -> new IgnitionMonitorResponse().getDefaultResponse();
+            case ModuleVoltageCommand moduleVoltageCommand -> new ModuleVoltageResponse().getDefaultResponse();
+            case PendingTroubleCodesCommand pendingTroubleCodesCommand -> new PendingTroubleCodesResponse().getDefaultResponse();
+            case TimingAdvanceCommand timingAdvanceCommand -> new TimingAdvanceResponse().getDefaultResponse();
             case null, default -> "NO DATA";
         };
     }

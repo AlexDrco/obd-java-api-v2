@@ -54,7 +54,13 @@ public class SimulatedExample {
 
                 new VinCommand(),
 
-                new DtcNumberCommand()
+                new DtcNumberCommand(),
+
+                new EquivalentRatioCommand(),
+                new IgnitionMonitorCommand(),
+                new ModuleVoltageCommand(),
+                new PermanentTroubleCodesCommand(),
+                new TimingAdvanceCommand()
         );
 
         sender.sendCommands(commands);

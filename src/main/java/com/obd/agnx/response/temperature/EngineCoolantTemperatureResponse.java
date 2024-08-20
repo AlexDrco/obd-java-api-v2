@@ -1,4 +1,4 @@
-package com.obd.agnx.response.common;
+package com.obd.agnx.response.temperature;
 
 import com.obd.agnx.response.OBDResponse;
 import com.obd.agnx.utils.PerlinNoise;

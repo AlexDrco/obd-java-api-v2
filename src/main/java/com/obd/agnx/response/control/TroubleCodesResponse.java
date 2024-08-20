@@ -1,7 +1,6 @@
-package com.obd.agnx.response.common;
+package com.obd.agnx.response.control;
 
 import com.obd.agnx.response.OBDResponse;
-import com.obd.pires.commands.control.TroubleCodesCommand;
 
 public class TroubleCodesResponse extends OBDResponse {
 

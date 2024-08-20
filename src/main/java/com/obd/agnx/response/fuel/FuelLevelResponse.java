@@ -1,4 +1,4 @@
-package com.obd.agnx.response.common;
+package com.obd.agnx.response.fuel;
 
 
 import com.obd.agnx.response.OBDResponse;

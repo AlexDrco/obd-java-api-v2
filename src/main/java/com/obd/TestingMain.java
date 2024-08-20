@@ -1,8 +1,12 @@
 package com.obd;
 
-import com.obd.agnx.response.common.*;
+import com.obd.agnx.response.control.*;
+import com.obd.agnx.response.engine.RPMResponse;
+import com.obd.agnx.response.engine.RuntimeResponse;
+import com.obd.agnx.response.fuel.FuelLevelResponse;
+import com.obd.agnx.response.pressure.EvapVpResponse;
+import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.agnx.vin.VinDecoder;
-import com.obd.pires.commands.control.DistanceSinceCCCommand;
 
 public class TestingMain {
     public static void main(String[] args) {
@@ -46,5 +50,20 @@ public class TestingMain {
         TroubleCodesResponse troubleCodesResponse1 = new TroubleCodesResponse();
         String s11 = troubleCodesResponse1.stringToHex("P0300,P0420");
         System.out.println(s11);
+        EquivalentRatioResponse equivalentRatioResponse = new EquivalentRatioResponse();
+        String s12 = equivalentRatioResponse.stringToHex("1.9");
+        System.out.println(s12);
+        IgnitionMonitorResponse ignitionMonitorResponse = new IgnitionMonitorResponse();
+        String s13 = ignitionMonitorResponse.stringToHex("ON");
+        System.out.println(s13);
+        ModuleVoltageResponse moduleVoltageResponse = new ModuleVoltageResponse();
+        String s14 = moduleVoltageResponse.stringToHex("12.52");
+        System.out.println(s14);
+        PendingTroubleCodesResponse pendingTroubleCodesResponse = new PendingTroubleCodesResponse();
+        String s15 = pendingTroubleCodesResponse.stringToHex("P0300,P0420");
+        System.out.println(s15);
+        TimingAdvanceResponse timingAdvanceResponse = new TimingAdvanceResponse();
+        String s16 = timingAdvanceResponse.stringToHex("12.5");
+        System.out.println(s16);
     }
 }
