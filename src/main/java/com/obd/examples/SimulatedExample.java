@@ -7,7 +7,7 @@ import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.*;
 import com.obd.pires.commands.fuel.*;
-import com.obd.pires.commands.pressure.EvapVpCommand;
+import com.obd.pires.commands.pressure.*;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
 import java.util.Arrays;
@@ -69,7 +69,12 @@ public class SimulatedExample {
                 new ConsumptionRateCommand(),
                 new FindFuelTypeCommand(),
                 new FuelTrimCommand(),
-                new WidebandAirFuelRatioCommand()
+                new WidebandAirFuelRatioCommand(),
+
+                new BarometricPressureCommand(),
+                new FuelPressureCommand(),
+                new FuelRailPressureCommand(),
+                new IntakeManifoldPressureCommand()
         );
 
         sender.sendCommands(commands);

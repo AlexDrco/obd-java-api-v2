@@ -3,7 +3,7 @@ package com.obd;
 import com.obd.agnx.response.control.*;
 import com.obd.agnx.response.engine.*;
 import com.obd.agnx.response.fuel.*;
-import com.obd.agnx.response.pressure.EvapVpResponse;
+import com.obd.agnx.response.pressure.*;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.agnx.vin.VinDecoder;
 
@@ -94,6 +94,18 @@ public class TestingMain {
         WidebandAirFuelRatioResponse widebandAirFuelRatioResponse = new WidebandAirFuelRatioResponse();
         String s26 = widebandAirFuelRatioResponse.stringToHex("14.7");
         System.out.println(s26);
+        BarometricPressureResponse barometricPressureResponse = new BarometricPressureResponse();
+        String s27 = barometricPressureResponse.stringToHex("101.3kPa");
+        System.out.println(s27);
+        FuelPressureResponse fuelPressureResponse = new FuelPressureResponse();
+        String s28 = fuelPressureResponse.stringToHex("38psi");
+        System.out.println(s28);
+        FuelRailPressureResponse fuelRailPressureResponse = new FuelRailPressureResponse();
+        String s29 = fuelRailPressureResponse.stringToHex("261kPa");
+        System.out.println(s29);
+        IntakeManifoldPressureResponse intakeManifoldPressureResponse = new IntakeManifoldPressureResponse();
+        String s30 = intakeManifoldPressureResponse.stringToHex("30kPa");
+        System.out.println(s30);
 
     }
 }
