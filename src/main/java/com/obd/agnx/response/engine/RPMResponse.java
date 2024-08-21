@@ -53,4 +53,9 @@ public class RPMResponse extends OBDResponse {
         int rpm = perlinNoise.noiseIntInRange(noiseSeed, lowerLimit, upperLimit);
         return String.format("41 0C %04X", rpm);
     }
+
+    @Override
+    public String getNoErrorResponse() {
+        return getDefaultResponse(); // No error response
+    }
 }

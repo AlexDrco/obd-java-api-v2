@@ -62,7 +62,8 @@ public class DistanceSinceCCResponse extends OBDResponse {
         return "41 31 " + hexValue.substring(0, 2) + " " + hexValue.substring(2, 4);
     }
 
-    public String getNoKmResponse() {
-        return "41 31 00 00"; // 0 km
+    @Override
+    public String getNoErrorResponse() {
+        return getDefaultResponse(); // 0 km
     }
 }

@@ -32,4 +32,9 @@ public class IgnitionMonitorResponse extends OBDResponse {
     public String stringToHex(String response) {
         return response.equalsIgnoreCase("ON") ? "4F 4E" : "4F 46"; // "ON" or "OF" in hex
     }
+
+    @Override
+    public String getNoErrorResponse() {
+        return "ON";
+    }
 }

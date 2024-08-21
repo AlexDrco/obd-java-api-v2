@@ -2,20 +2,20 @@ package com.obd.agnx.response.engine;
 
 import com.obd.agnx.response.OBDResponse;
 
-public class RuntimeResponse extends OBDResponse {
+public class OilTempResponse extends OBDResponse {
 
-    public RuntimeResponse() {
-        super("01 1F");
+    public OilTempResponse() {
+        super("01 5C");
     }
 
     @Override
     public String getDefaultResponse() {
-        return "41 1F FF FF"; // Default response with 18:12:15
+        return "41 5C 6F"; // Default response with 71°C oil temperature
     }
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Simulated response with 0 seconds
+        return getDefaultResponse(); // Simulated response with 0°C oil temperature
     }
 
     @Override
@@ -30,12 +30,13 @@ public class RuntimeResponse extends OBDResponse {
 
     @Override
     public String stringToHex(String response) {
-        int runtime = Integer.parseInt(response);
-        String hexRuntime = Integer.toHexString(runtime).toUpperCase();
-        return "41 1F " + hexRuntime;
+        float temperature = Float.parseFloat(response);
+        int hexValue = Math.round(temperature + 40); // OBD-II standard for temperature
+        return "41 5C" + String.format("%02X", hexValue);
     }
 
-    public String getNoErrorResponse(){
+    @Override
+    public String getNoErrorResponse() {
         return getDefaultResponse();
     }
 }

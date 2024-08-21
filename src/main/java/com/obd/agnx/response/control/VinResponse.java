@@ -44,4 +44,9 @@ public class VinResponse extends OBDResponse {
         // Return the hexadecimal string
         return "49 02" + hex.toString();
     }
+
+    @Override
+    public String getNoErrorResponse() {
+        return getDefaultResponse();
+    }
 }

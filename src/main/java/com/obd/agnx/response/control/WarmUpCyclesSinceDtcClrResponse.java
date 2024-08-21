@@ -35,7 +35,8 @@ public class WarmUpCyclesSinceDtcClrResponse extends OBDResponse {
         return "41 30" + hexCycleCount;
     }
 
-    public String getNoCyclesResponse(){
+    @Override
+    public String getNoErrorResponse(){
         return "41 30 00";
     }
 }

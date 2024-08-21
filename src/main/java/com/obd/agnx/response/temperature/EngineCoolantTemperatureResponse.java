@@ -46,4 +46,9 @@ public class EngineCoolantTemperatureResponse extends OBDResponse {
 
         return "41 05" + hexValue;
     }
+
+    @Override
+    public String getNoErrorResponse(){
+        return "41 05 53"; // Default response with 83°C
+    }
 }

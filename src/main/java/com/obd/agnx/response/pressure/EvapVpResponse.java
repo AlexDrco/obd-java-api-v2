@@ -37,6 +37,7 @@ public class EvapVpResponse extends OBDResponse {
         return "41 32" + hexValue;
     }
 
+    @Override
     public String getNoErrorResponse(){
         return "41 32 00 00";
     }

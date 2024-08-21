@@ -63,7 +63,8 @@ public class DistanceMILOnResponse extends OBDResponse {
         return "41 21 " + hexValue.substring(0, 2) + " " + hexValue.substring(2, 4);
     }
 
+    @Override
     public String getNoErrorResponse(){
-        return "41 21 00 00";
+        return getDefaultResponse();
     }
 }

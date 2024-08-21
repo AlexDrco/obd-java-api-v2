@@ -5,8 +5,7 @@ import com.obd.comm.SimulatedSender;
 import com.obd.comm.sender.AbstractOBDSender;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
-import com.obd.pires.commands.engine.RPMCommand;
-import com.obd.pires.commands.engine.RuntimeCommand;
+import com.obd.pires.commands.engine.*;
 import com.obd.pires.commands.fuel.FuelLevelCommand;
 import com.obd.pires.commands.pressure.EvapVpCommand;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
@@ -60,7 +59,12 @@ public class SimulatedExample {
                 new IgnitionMonitorCommand(),
                 new ModuleVoltageCommand(),
                 new PermanentTroubleCodesCommand(),
-                new TimingAdvanceCommand()
+                new TimingAdvanceCommand(),
+                new AbsoluteLoadCommand(),
+                new LoadCommand(),
+                new MassAirFlowCommand(),
+                new OilTempCommand(),
+                new ThrottlePositionCommand()
         );
 
         sender.sendCommands(commands);

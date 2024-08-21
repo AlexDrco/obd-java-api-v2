@@ -1,21 +1,21 @@
-package com.obd.agnx.response.control;
+package com.obd.agnx.response.engine;
 
 import com.obd.agnx.response.OBDResponse;
 
-public class TimingAdvanceResponse extends OBDResponse {
+public class ThrottlePositionResponse extends OBDResponse {
 
-    public TimingAdvanceResponse() {
-        super("01 0E");
+    public ThrottlePositionResponse() {
+        super("01 11");
     }
 
     @Override
     public String getDefaultResponse() {
-        return "41 0E 50"; // Example default response
+        return "41 11 03"; // Default response with 0% throttle position
     }
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Timing advance does not vary
+        return getDefaultResponse(); // Simulated response with 0% throttle position
     }
 
     @Override
@@ -25,14 +25,14 @@ public class TimingAdvanceResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse(); // Timing advance does not vary
+        return getDefaultResponse();
     }
 
     @Override
     public String stringToHex(String response) {
-        double advance = Double.parseDouble(response);
-        int value = (int) ((advance + 64) * 2);
-        return String.format("41 0E %02X", value);
+        float percentage = Float.parseFloat(response);
+        int hexValue = Math.round(percentage * 255 / 100);
+        return "41 11" + String.format("%02X", hexValue);
     }
 
     @Override

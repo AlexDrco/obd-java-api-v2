@@ -52,7 +52,8 @@ public class PendingTroubleCodesResponse extends OBDResponse {
         return hexResponse.toString();
     }
 
+    @Override
     public String getNoErrorResponse() {
-        return "00 00 00 00";
+        return "47 01 00 00 00 00"; // No pending trouble codes
     }
 }

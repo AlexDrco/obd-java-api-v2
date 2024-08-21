@@ -36,7 +36,8 @@ public class FuelLevelResponse extends OBDResponse {
         return "41 2F" + String.format("%02X", hexValue);
     }
 
-    public String getFullFuelLevelResponse(){
-        return "41 2F FF"; // Default response with 100% fuel level
+    @Override
+    public String getNoErrorResponse(){
+        return getDefaultResponse();
     }
 }

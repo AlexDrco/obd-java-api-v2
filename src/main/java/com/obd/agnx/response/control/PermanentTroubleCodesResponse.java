@@ -52,7 +52,8 @@ public class PermanentTroubleCodesResponse extends OBDResponse {
         return hexResponse.toString();
     }
 
+    @Override
     public String getNoErrorResponse(){
-        return "00 00 00 00";
+        return "43 01 00 00";
     }
 }

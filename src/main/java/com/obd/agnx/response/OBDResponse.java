@@ -1,15 +1,13 @@
 package com.obd.agnx.response;
 
 import com.obd.agnx.response.control.*;
-import com.obd.agnx.response.engine.RPMResponse;
-import com.obd.agnx.response.engine.RuntimeResponse;
+import com.obd.agnx.response.engine.*;
 import com.obd.agnx.response.fuel.FuelLevelResponse;
 import com.obd.agnx.response.pressure.EvapVpResponse;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
-import com.obd.pires.commands.engine.RPMCommand;
-import com.obd.pires.commands.engine.RuntimeCommand;
+import com.obd.pires.commands.engine.*;
 import com.obd.pires.commands.fuel.FuelLevelCommand;
 import com.obd.pires.commands.pressure.EvapVpCommand;
 import com.obd.pires.commands.protocol.*;
@@ -71,7 +69,22 @@ public abstract class OBDResponse {
     public abstract String getSimulatedResponse(String initialValue);
 
 
+    /**
+     * Abstract method to convert a string response of each command to the hexadecimal value
+     * that would be the original OBD response.
+     *
+     * @param response the response string
+     * @return the hexadecimal string
+     */
     public abstract String stringToHex(String response);
+
+    /**
+     * Abstract method to get the no error response for the OBD command.
+     * or the default response if the command does not have a "no error" response.
+     *
+     * @return the no error response string
+     */
+    public abstract String getNoErrorResponse();
 
 
     /**
@@ -103,6 +116,11 @@ public abstract class OBDResponse {
             case ModuleVoltageCommand moduleVoltageCommand -> new ModuleVoltageResponse().getDefaultResponse();
             case PendingTroubleCodesCommand pendingTroubleCodesCommand -> new PendingTroubleCodesResponse().getDefaultResponse();
             case TimingAdvanceCommand timingAdvanceCommand -> new TimingAdvanceResponse().getDefaultResponse();
+            case AbsoluteLoadCommand absoluteLoadCommand -> new AbsoluteLoadResponse().getDefaultResponse();
+            case LoadCommand loadCommand -> new LoadResponse().getDefaultResponse();
+            case MassAirFlowCommand massAirFlowCommand -> new MassAirFlowResponse().getDefaultResponse();
+            case OilTempCommand oilTempCommand -> new OilTempResponse().getDefaultResponse();
+            case ThrottlePositionCommand throttlePositionCommand -> new ThrottlePositionResponse().getDefaultResponse();
             case null, default -> "NO DATA";
         };
     }

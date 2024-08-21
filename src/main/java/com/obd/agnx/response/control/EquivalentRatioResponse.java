@@ -49,7 +49,8 @@ public class EquivalentRatioResponse extends OBDResponse {
         return "41 44 " + hexValue.substring(0, 2) + " " + hexValue.substring(2, 4);
     }
 
+    @Override
     public String getNoErrorResponse() {
-        return "41 44 00 00"; // No error response
+        return getDefaultResponse(); // No error response
     }
 }

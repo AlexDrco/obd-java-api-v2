@@ -1,8 +1,7 @@
 package com.obd;
 
 import com.obd.agnx.response.control.*;
-import com.obd.agnx.response.engine.RPMResponse;
-import com.obd.agnx.response.engine.RuntimeResponse;
+import com.obd.agnx.response.engine.*;
 import com.obd.agnx.response.fuel.FuelLevelResponse;
 import com.obd.agnx.response.pressure.EvapVpResponse;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
@@ -65,5 +64,21 @@ public class TestingMain {
         TimingAdvanceResponse timingAdvanceResponse = new TimingAdvanceResponse();
         String s16 = timingAdvanceResponse.stringToHex("12.5");
         System.out.println(s16);
+        AbsoluteLoadResponse absoluteLoadResponse = new AbsoluteLoadResponse();
+        String s17 = absoluteLoadResponse.stringToHex("5.9");
+        System.out.println(s17);
+        LoadResponse loadResponse = new LoadResponse();
+        String s18 = loadResponse.stringToHex("5.9");
+        System.out.println(s18);
+        MassAirFlowResponse massAirFlowResponse = new MassAirFlowResponse();
+        String s19 = massAirFlowResponse.stringToHex("2.71");
+        System.out.println(s19);
+        OilTempResponse oilTempResponse = new OilTempResponse();
+        String s20 = oilTempResponse.stringToHex("100");
+        System.out.println(s20);
+        ThrottlePositionResponse throttlePositionResponse = new ThrottlePositionResponse();
+        String s21 = throttlePositionResponse.stringToHex("50");
+        System.out.println(s21);
+
     }
 }

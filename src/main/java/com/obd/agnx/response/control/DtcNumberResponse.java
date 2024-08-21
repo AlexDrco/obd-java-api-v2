@@ -45,6 +45,7 @@ public class DtcNumberResponse extends OBDResponse {
         return "41 01" + hexResponse;
     }
 
+    @Override
     public String getNoErrorResponse(){
         return "43 00 00 00 00 00"; // MIL OFF, no error codes
     }

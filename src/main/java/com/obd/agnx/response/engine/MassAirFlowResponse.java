@@ -1,21 +1,21 @@
-package com.obd.agnx.response.control;
+package com.obd.agnx.response.engine;
 
 import com.obd.agnx.response.OBDResponse;
 
-public class TimingAdvanceResponse extends OBDResponse {
+public class MassAirFlowResponse extends OBDResponse {
 
-    public TimingAdvanceResponse() {
-        super("01 0E");
+    public MassAirFlowResponse() {
+        super("01 10");
     }
 
     @Override
     public String getDefaultResponse() {
-        return "41 0E 50"; // Example default response
+        return "41 10 01 0F"; // Default response with 2.71g/s MAF
     }
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Timing advance does not vary
+        return getDefaultResponse(); // Simulated response with 0 g/s MAF
     }
 
     @Override
@@ -25,14 +25,14 @@ public class TimingAdvanceResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse(); // Timing advance does not vary
+        return getDefaultResponse();
     }
 
     @Override
     public String stringToHex(String response) {
-        double advance = Double.parseDouble(response);
-        int value = (int) ((advance + 64) * 2);
-        return String.format("41 0E %02X", value);
+        float maf = Float.parseFloat(response);
+        int hexValue = Math.round(maf * 100);
+        return "41 10" + String.format("%04X", hexValue);
     }
 
     @Override

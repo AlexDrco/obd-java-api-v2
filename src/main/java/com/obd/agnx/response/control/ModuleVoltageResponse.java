@@ -36,4 +36,9 @@ public class ModuleVoltageResponse extends OBDResponse {
         int b = value & 0xFF;
         return String.format("41 42 %02X %02X", a, b);
     }
+
+    @Override
+    public String getNoErrorResponse() {
+        return getDefaultResponse(); // No error response
+    }
 }

@@ -111,6 +111,7 @@ public class TroubleCodesResponse extends OBDResponse {
         return hexResponse.toString();
     }
 
+    @Override
     public String getNoErrorResponse() {
         return "43 00";
     }
