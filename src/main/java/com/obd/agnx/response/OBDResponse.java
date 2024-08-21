@@ -2,13 +2,13 @@ package com.obd.agnx.response;
 
 import com.obd.agnx.response.control.*;
 import com.obd.agnx.response.engine.*;
-import com.obd.agnx.response.fuel.FuelLevelResponse;
+import com.obd.agnx.response.fuel.*;
 import com.obd.agnx.response.pressure.EvapVpResponse;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.*;
-import com.obd.pires.commands.fuel.FuelLevelCommand;
+import com.obd.pires.commands.fuel.*;
 import com.obd.pires.commands.pressure.EvapVpCommand;
 import com.obd.pires.commands.protocol.*;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
@@ -121,6 +121,11 @@ public abstract class OBDResponse {
             case MassAirFlowCommand massAirFlowCommand -> new MassAirFlowResponse().getDefaultResponse();
             case OilTempCommand oilTempCommand -> new OilTempResponse().getDefaultResponse();
             case ThrottlePositionCommand throttlePositionCommand -> new ThrottlePositionResponse().getDefaultResponse();
+            case AirFuelRatioCommand airFuelRatioCommand -> new AirFuelRatioResponse().getDefaultResponse();
+            case ConsumptionRateCommand consumptionRateCommand -> new ConsumptionRateResponse().getDefaultResponse();
+            case FindFuelTypeCommand findFuelTypeCommand -> new FindFuelTypeResponse().getDefaultResponse();
+            case FuelTrimCommand fuelTrimCommand -> new FuelTrimResponse().getDefaultResponse();
+            case WidebandAirFuelRatioCommand widebandAirFuelRatioCommand -> new WidebandAirFuelRatioResponse().getDefaultResponse();
             case null, default -> "NO DATA";
         };
     }

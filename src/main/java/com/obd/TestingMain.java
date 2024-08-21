@@ -2,7 +2,7 @@ package com.obd;
 
 import com.obd.agnx.response.control.*;
 import com.obd.agnx.response.engine.*;
-import com.obd.agnx.response.fuel.FuelLevelResponse;
+import com.obd.agnx.response.fuel.*;
 import com.obd.agnx.response.pressure.EvapVpResponse;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.agnx.vin.VinDecoder;
@@ -77,8 +77,23 @@ public class TestingMain {
         String s20 = oilTempResponse.stringToHex("100");
         System.out.println(s20);
         ThrottlePositionResponse throttlePositionResponse = new ThrottlePositionResponse();
-        String s21 = throttlePositionResponse.stringToHex("50");
+        String s21 = throttlePositionResponse.stringToHex("4.8");
         System.out.println(s21);
+        AirFuelRatioResponse airFuelRatioResponse = new AirFuelRatioResponse();
+        String s22 = airFuelRatioResponse.stringToHex("14.7");
+        System.out.println(s22);
+        ConsumptionRateResponse consumptionRateResponse = new ConsumptionRateResponse();
+        String s23 = consumptionRateResponse.stringToHex("8.7");
+        System.out.println(s23);
+        FindFuelTypeResponse findFuelTypeResponse = new FindFuelTypeResponse();
+        String s24 = findFuelTypeResponse.stringToHex("1");
+        System.out.println(s24);
+        FuelTrimResponse fuelTrimResponse = new FuelTrimResponse();
+        String s25 = fuelTrimResponse.stringToHex("1.7");
+        System.out.println(s25);
+        WidebandAirFuelRatioResponse widebandAirFuelRatioResponse = new WidebandAirFuelRatioResponse();
+        String s26 = widebandAirFuelRatioResponse.stringToHex("14.7");
+        System.out.println(s26);
 
     }
 }

@@ -1,21 +1,21 @@
-package com.obd.agnx.response.engine;
+package com.obd.agnx.response.fuel;
 
 import com.obd.agnx.response.OBDResponse;
 
-public class ThrottlePositionResponse extends OBDResponse {
+public class WidebandAirFuelRatioResponse extends OBDResponse {
 
-    public ThrottlePositionResponse() {
-        super("01 11");
+    public WidebandAirFuelRatioResponse() {
+        super("01 34");
     }
 
     @Override
     public String getDefaultResponse() {
-        return "41 11 03"; // Default response with 1.2% throttle position
+        return "41 34 80 00"; // Default response with 14.7:1 AFR
     }
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Simulated response with 0% throttle position
+        return getDefaultResponse(); // Simulated response with 0:1 AFR
     }
 
     @Override
@@ -30,9 +30,9 @@ public class ThrottlePositionResponse extends OBDResponse {
 
     @Override
     public String stringToHex(String response) {
-        float percentage = Float.parseFloat(response);
-        int hexValue = Math.round(percentage * 255 / 100);
-        return "41 11" + String.format("%02X", hexValue);
+        float wafr = Float.parseFloat(response);
+        int hexValue = Math.round((wafr / 14.7f) * 32768);
+        return "41 34" + String.format("%04X", hexValue);
     }
 
     @Override

@@ -1,21 +1,21 @@
-package com.obd.agnx.response.engine;
+package com.obd.agnx.response.fuel;
 
 import com.obd.agnx.response.OBDResponse;
 
-public class ThrottlePositionResponse extends OBDResponse {
+public class FuelTrimResponse extends OBDResponse {
 
-    public ThrottlePositionResponse() {
-        super("01 11");
+    public FuelTrimResponse() {
+        super("01 06");
     }
 
     @Override
     public String getDefaultResponse() {
-        return "41 11 03"; // Default response with 1.2% throttle position
+        return "41 06 82"; // Default response with 0% fuel trim
     }
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Simulated response with 0% throttle position
+        return getDefaultResponse(); // Simulated response with 1.6% fuel trim
     }
 
     @Override
@@ -31,8 +31,8 @@ public class ThrottlePositionResponse extends OBDResponse {
     @Override
     public String stringToHex(String response) {
         float percentage = Float.parseFloat(response);
-        int hexValue = Math.round(percentage * 255 / 100);
-        return "41 11" + String.format("%02X", hexValue);
+        int hexValue = Math.round((percentage + 100) * 128 / 100);
+        return "41 06" + String.format("%02X", hexValue);
     }
 
     @Override

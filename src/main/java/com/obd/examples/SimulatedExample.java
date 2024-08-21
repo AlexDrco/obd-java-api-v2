@@ -6,7 +6,7 @@ import com.obd.comm.sender.AbstractOBDSender;
 import com.obd.pires.commands.ObdCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.*;
-import com.obd.pires.commands.fuel.FuelLevelCommand;
+import com.obd.pires.commands.fuel.*;
 import com.obd.pires.commands.pressure.EvapVpCommand;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
@@ -64,7 +64,12 @@ public class SimulatedExample {
                 new LoadCommand(),
                 new MassAirFlowCommand(),
                 new OilTempCommand(),
-                new ThrottlePositionCommand()
+                new ThrottlePositionCommand(),
+                new AirFuelRatioCommand(),
+                new ConsumptionRateCommand(),
+                new FindFuelTypeCommand(),
+                new FuelTrimCommand(),
+                new WidebandAirFuelRatioCommand()
         );
 
         sender.sendCommands(commands);
