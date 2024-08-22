@@ -15,7 +15,7 @@ public class DistanceMILOnResponse extends OBDResponse {
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Simulated response with 0 km
+        return getDefaultResponse();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.obd;
+package com.obd.examples;
 
 import com.obd.agnx.response.SpeedResponse;
 import com.obd.agnx.response.control.*;
@@ -10,7 +10,7 @@ import com.obd.agnx.response.temperature.AmbientAirTemperatureResponse;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.agnx.vin.VinDecoder;
 
-public class TestingMain {
+public class ValueToHexExample {
     public static void main(String[] args) {
         VinDecoder vinDecoder = new VinDecoder("4T3DWRFV1RU113150");
         System.out.println("Year: " + vinDecoder.getYear());
@@ -46,9 +46,7 @@ public class TestingMain {
         DistanceSinceCCResponse distanceSinceCCResponse = new DistanceSinceCCResponse();
         String s9 = distanceSinceCCResponse.stringToHex("767m");
         System.out.println(s9);
-        DistanceMILOnResponse distanceMILOnResponse = new DistanceMILOnResponse();
-        String s10 = distanceMILOnResponse.stringToHex("16km");
-        System.out.println(s10);
+
         TroubleCodesResponse troubleCodesResponse1 = new TroubleCodesResponse();
         String s11 = troubleCodesResponse1.stringToHex("P0300,P0420");
         System.out.println(s11);
@@ -119,5 +117,8 @@ public class TestingMain {
         String s33 = speedResponse.stringToHex("60km/h");
         System.out.println(s33);
 
+        DistanceMILOnResponse distanceMILOnResponse = new DistanceMILOnResponse();
+        String s10 = distanceMILOnResponse.stringToHex("16km");
+        System.out.println(s10);
     }
 }

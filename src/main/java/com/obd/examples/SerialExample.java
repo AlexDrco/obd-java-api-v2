@@ -4,10 +4,14 @@ import com.obd.comm.sender.OBDSender;
 import com.obd.comm.SerialPortSender;
 import com.obd.comm.CommandResponseRaw;
 import com.obd.pires.commands.ObdCommand;
+import com.obd.pires.commands.SpeedCommand;
 import com.obd.pires.commands.control.*;
-import com.obd.pires.commands.engine.RPMCommand;
-import com.obd.pires.commands.fuel.FuelLevelCommand;
+import com.obd.pires.commands.engine.*;
+import com.obd.pires.commands.fuel.*;
+import com.obd.pires.commands.pressure.*;
 import com.obd.pires.commands.protocol.*;
+import com.obd.pires.commands.temperature.AirIntakeTemperatureCommand;
+import com.obd.pires.commands.temperature.AmbientAirTemperatureCommand;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
 import java.util.Arrays;
@@ -27,16 +31,45 @@ public class SerialExample {
         sender.setupEML327();
 
         List<ObdCommand> commands = Arrays.asList(
+                // Control Commands
+                new DistanceMILOnCommand(),
                 new DistanceSinceCCCommand(),
-                new TroubleCodesCommand(),
-                new PermanentTroubleCodesCommand(),
-                new RPMCommand(),
-                new VinCommand(),
-                new FuelLevelCommand(),
-                new EngineCoolantTemperatureCommand(),
-                new AvailablePidsCommand_01_20(),
                 new DtcNumberCommand(),
-                new ObdRawCommand("01 03")
+                new EquivalentRatioCommand(),
+                new IgnitionMonitorCommand(),
+                new ModuleVoltageCommand(),
+                new PendingTroubleCodesCommand(),
+                new PermanentTroubleCodesCommand(),
+                new TimingAdvanceCommand(),
+                new TroubleCodesCommand(),
+                new VinCommand(),
+                new WarmUpCyclesSinceDtcClrCommand(),
+                // Engine Commands
+                new AbsoluteLoadCommand(),
+                new LoadCommand(),
+                new MassAirFlowCommand(),
+                new OilTempCommand(),
+                new RPMCommand(),
+                new RuntimeCommand(),
+                new ThrottlePositionCommand(),
+                // Fuel Commands
+                new AirFuelRatioCommand(),
+                new ConsumptionRateCommand(),
+                new FindFuelTypeCommand(),
+                new FuelLevelCommand(),
+                new WidebandAirFuelRatioCommand(),
+                // Pressure Commands
+                new BarometricPressureCommand(),
+                new EvapVpCommand(),
+                new FuelPressureCommand(),
+                new FuelRailPressureCommand(),
+                new IntakeManifoldPressureCommand(),
+                // Temperature Commands
+                new AirIntakeTemperatureCommand(),
+                new AmbientAirTemperatureCommand(),
+                new EngineCoolantTemperatureCommand(),
+                // Speed Commands
+                new SpeedCommand()
         );
 
         sender.sendCommands(commands);

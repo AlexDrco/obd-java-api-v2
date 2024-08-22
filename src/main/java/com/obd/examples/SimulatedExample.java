@@ -39,49 +39,46 @@ public class SimulatedExample {
         sender.setupEML327();
 
         List<ObdCommand> commands = Arrays.asList(
-                new RuntimeCommand(),
-                new DistanceMILOnCommand(), //Distance MIL On
-                new FuelLevelCommand(),
-
-                new WarmUpCyclesSinceDtcClrCommand(),
-                new DistanceSinceCCCommand(), //Clr Distance
-                new EvapVpCommand(),
-
-                new RPMCommand(),
-                new EngineCoolantTemperatureCommand(),
-
-                new TroubleCodesCommand(),
-                new PermanentTroubleCodesCommand(),
-
-
-                new VinCommand(),
-
+                // Control Commands
+                new DistanceMILOnCommand(),
+                new DistanceSinceCCCommand(),
                 new DtcNumberCommand(),
-
                 new EquivalentRatioCommand(),
                 new IgnitionMonitorCommand(),
                 new ModuleVoltageCommand(),
+                new PendingTroubleCodesCommand(),
                 new PermanentTroubleCodesCommand(),
                 new TimingAdvanceCommand(),
+                new TroubleCodesCommand(),
+                new VinCommand(),
+                new WarmUpCyclesSinceDtcClrCommand(),
+                // Engine Commands
                 new AbsoluteLoadCommand(),
                 new LoadCommand(),
                 new MassAirFlowCommand(),
                 new OilTempCommand(),
+                new RPMCommand(),
+                new RuntimeCommand(),
                 new ThrottlePositionCommand(),
+                // Fuel Commands
                 new AirFuelRatioCommand(),
                 new ConsumptionRateCommand(),
                 new FindFuelTypeCommand(),
-                new FuelTrimCommand(),
+                new FuelLevelCommand(),
                 new WidebandAirFuelRatioCommand(),
-
+                // Pressure Commands
                 new BarometricPressureCommand(),
+                new EvapVpCommand(),
                 new FuelPressureCommand(),
                 new FuelRailPressureCommand(),
                 new IntakeManifoldPressureCommand(),
-
+                // Temperature Commands
                 new AirIntakeTemperatureCommand(),
                 new AmbientAirTemperatureCommand(),
+                new EngineCoolantTemperatureCommand(),
+                // Speed Commands
                 new SpeedCommand()
+
         );
 
         sender.sendCommands(commands);
