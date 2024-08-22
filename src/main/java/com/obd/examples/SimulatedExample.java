@@ -8,6 +8,8 @@ import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.*;
 import com.obd.pires.commands.fuel.*;
 import com.obd.pires.commands.pressure.*;
+import com.obd.pires.commands.temperature.AirIntakeTemperatureCommand;
+import com.obd.pires.commands.temperature.AmbientAirTemperatureCommand;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
 
 import java.util.Arrays;
@@ -74,7 +76,10 @@ public class SimulatedExample {
                 new BarometricPressureCommand(),
                 new FuelPressureCommand(),
                 new FuelRailPressureCommand(),
-                new IntakeManifoldPressureCommand()
+                new IntakeManifoldPressureCommand(),
+
+                new AirIntakeTemperatureCommand(),
+                new AmbientAirTemperatureCommand()
         );
 
         sender.sendCommands(commands);

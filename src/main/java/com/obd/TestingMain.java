@@ -4,6 +4,8 @@ import com.obd.agnx.response.control.*;
 import com.obd.agnx.response.engine.*;
 import com.obd.agnx.response.fuel.*;
 import com.obd.agnx.response.pressure.*;
+import com.obd.agnx.response.temperature.AirIntakeTemperatureResponse;
+import com.obd.agnx.response.temperature.AmbientAirTemperatureResponse;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.agnx.vin.VinDecoder;
 
@@ -106,6 +108,12 @@ public class TestingMain {
         IntakeManifoldPressureResponse intakeManifoldPressureResponse = new IntakeManifoldPressureResponse();
         String s30 = intakeManifoldPressureResponse.stringToHex("30kPa");
         System.out.println(s30);
+        AirIntakeTemperatureResponse airIntakeTemperatureResponse = new AirIntakeTemperatureResponse();
+        String s31 = airIntakeTemperatureResponse.stringToHex("37");
+        System.out.println(s31);
+        AmbientAirTemperatureResponse ambientAirTemperatureResponse = new AmbientAirTemperatureResponse();
+        String s32 = ambientAirTemperatureResponse.stringToHex("50");
+        System.out.println(s32);
 
     }
 }
