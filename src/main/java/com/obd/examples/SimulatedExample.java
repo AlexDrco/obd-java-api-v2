@@ -4,6 +4,7 @@ import com.obd.comm.CommandResponseRaw;
 import com.obd.comm.SimulatedSender;
 import com.obd.comm.sender.AbstractOBDSender;
 import com.obd.pires.commands.ObdCommand;
+import com.obd.pires.commands.SpeedCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.*;
 import com.obd.pires.commands.fuel.*;
@@ -79,7 +80,8 @@ public class SimulatedExample {
                 new IntakeManifoldPressureCommand(),
 
                 new AirIntakeTemperatureCommand(),
-                new AmbientAirTemperatureCommand()
+                new AmbientAirTemperatureCommand(),
+                new SpeedCommand()
         );
 
         sender.sendCommands(commands);

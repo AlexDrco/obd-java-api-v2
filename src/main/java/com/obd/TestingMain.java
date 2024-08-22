@@ -1,5 +1,6 @@
 package com.obd;
 
+import com.obd.agnx.response.SpeedResponse;
 import com.obd.agnx.response.control.*;
 import com.obd.agnx.response.engine.*;
 import com.obd.agnx.response.fuel.*;
@@ -114,6 +115,9 @@ public class TestingMain {
         AmbientAirTemperatureResponse ambientAirTemperatureResponse = new AmbientAirTemperatureResponse();
         String s32 = ambientAirTemperatureResponse.stringToHex("50");
         System.out.println(s32);
+        SpeedResponse speedResponse = new SpeedResponse();
+        String s33 = speedResponse.stringToHex("60km/h");
+        System.out.println(s33);
 
     }
 }

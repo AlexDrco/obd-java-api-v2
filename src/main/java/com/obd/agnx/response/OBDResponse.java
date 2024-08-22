@@ -8,6 +8,7 @@ import com.obd.agnx.response.temperature.AirIntakeTemperatureResponse;
 import com.obd.agnx.response.temperature.AmbientAirTemperatureResponse;
 import com.obd.agnx.response.temperature.EngineCoolantTemperatureResponse;
 import com.obd.pires.commands.ObdCommand;
+import com.obd.pires.commands.SpeedCommand;
 import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.*;
 import com.obd.pires.commands.fuel.*;
@@ -136,6 +137,7 @@ public abstract class OBDResponse {
             case IntakeManifoldPressureCommand intakeManifoldPressureCommand -> new IntakeManifoldPressureResponse().getDefaultResponse();
             case AirIntakeTemperatureCommand airIntakeTemperatureCommand -> new AirIntakeTemperatureResponse().getDefaultResponse();
             case AmbientAirTemperatureCommand ambientAirTemperatureCommand -> new AmbientAirTemperatureResponse().getDefaultResponse();
+            case SpeedCommand speedCommand -> new SpeedResponse().getDefaultResponse();
             case null, default -> "NO DATA";
         };
     }
