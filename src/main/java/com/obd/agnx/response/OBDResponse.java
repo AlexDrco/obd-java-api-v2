@@ -102,19 +102,16 @@ public abstract class OBDResponse {
         return switch (command) {
             case DistanceSinceCCCommand distanceSinceCCCommand -> new DistanceSinceCCResponse().getDefaultResponse();
             case TroubleCodesCommand troubleCodesCommand -> new TroubleCodesResponse().getDefaultResponse();
-            case PermanentTroubleCodesCommand permanentTroubleCodesCommand ->
-                    new PermanentTroubleCodesResponse().getDefaultResponse();
+            case PermanentTroubleCodesCommand permanentTroubleCodesCommand -> new PermanentTroubleCodesResponse().getDefaultResponse();
             case RPMCommand rpmCommand -> new RPMResponse().getDefaultResponse();
             case VinCommand vinCommand -> new VinResponse().getDefaultResponse();
             case FuelLevelCommand fuelLevelCommand -> new FuelLevelResponse().getDefaultResponse();
-            case EngineCoolantTemperatureCommand engineCoolantTemperatureCommand ->
-                    new EngineCoolantTemperatureResponse().getDefaultResponse();
+            case EngineCoolantTemperatureCommand engineCoolantTemperatureCommand -> new EngineCoolantTemperatureResponse().getDefaultResponse();
             case DtcNumberCommand dtcNumberCommand -> new DtcNumberResponse().getDefaultResponse();
             case ObdRawCommand obdRawCommand -> "NO DATA";
             case RuntimeCommand runtimeCommand -> new RuntimeResponse().getDefaultResponse();
             case DistanceMILOnCommand distanceMILOnCommand -> new DistanceMILOnResponse().getDefaultResponse();
-            case WarmUpCyclesSinceDtcClrCommand warmUpCyclesSinceDtcClrCommand ->
-                    new WarmUpCyclesSinceDtcClrResponse().getDefaultResponse();
+            case WarmUpCyclesSinceDtcClrCommand warmUpCyclesSinceDtcClrCommand -> new WarmUpCyclesSinceDtcClrResponse().getDefaultResponse();
             case EvapVpCommand evapVpCommand -> new EvapVpResponse().getDefaultResponse();
             case EquivalentRatioCommand equivalentRatioCommand -> new EquivalentRatioResponse().getDefaultResponse();
             case IgnitionMonitorCommand ignitionMonitorCommand -> new IgnitionMonitorResponse().getDefaultResponse();
