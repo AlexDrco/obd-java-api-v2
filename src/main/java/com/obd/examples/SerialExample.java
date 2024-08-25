@@ -1,5 +1,6 @@
 package com.obd.examples;
 
+import com.obd.comm.sender.AbstractOBDSender;
 import com.obd.comm.sender.OBDSender;
 import com.obd.comm.SerialPortSender;
 import com.obd.comm.CommandResponseRaw;
@@ -21,7 +22,7 @@ public class SerialExample {
 
     public static void main(String[] args) {
 
-        OBDSender sender = new SerialPortSender("COM5");
+        AbstractOBDSender sender = new SerialPortSender("COM5");
 
         if (!sender.startConnection()) {
             System.err.println("Failed to start connection.");
