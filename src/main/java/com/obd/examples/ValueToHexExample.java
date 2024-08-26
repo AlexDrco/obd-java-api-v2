@@ -120,5 +120,8 @@ public class ValueToHexExample {
         DistanceMILOnResponse distanceMILOnResponse = new DistanceMILOnResponse();
         String s10 = distanceMILOnResponse.stringToHex("16km");
         System.out.println(s10);
+
+        RPMResponse rpmResponse1 = new RPMResponse();
+        rpmResponse1.getSimulatedResponse();
     }
 }
