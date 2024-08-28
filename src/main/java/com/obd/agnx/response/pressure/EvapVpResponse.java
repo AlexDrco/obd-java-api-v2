@@ -43,7 +43,7 @@ public class EvapVpResponse extends OBDResponse {
     @Override
     public String getNoErrorResponse(String initialValue) {
         try {
-            String numericInitialValue = initialValue.replaceAll("[^\\d.]*(?:\\.(?!.*\\.))?[^\\d.]*", "");
+            String numericInitialValue = initialValue.replaceAll("[^-\\d.]", "");
             String response = getSimulatedResponse(numericInitialValue);
             return stringToHex(response);
         } catch (Exception e) {
