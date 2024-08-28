@@ -46,7 +46,11 @@ public class VinResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
-        return getDefaultResponse();
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            return stringToHex(initialValue);
+        } catch (Exception e) {
+            return "NODATA";
+        }
     }
 }

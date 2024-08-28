@@ -34,7 +34,7 @@ public class IgnitionMonitorResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
+    public String getNoErrorResponse(String initialValue) {
         return "ON";
     }
 }

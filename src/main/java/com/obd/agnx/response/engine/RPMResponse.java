@@ -5,7 +5,6 @@ import com.obd.agnx.utils.PerlinNoise;
 
 public class RPMResponse extends OBDResponse {
 
-    private final PerlinNoise perlinNoise = new PerlinNoise();
     private double noiseSeed = 0;
 
     public RPMResponse() {
@@ -20,7 +19,7 @@ public class RPMResponse extends OBDResponse {
     @Override
     public String getSimulatedDefaultResponse() {
         noiseSeed += 0.1;
-        int rpm = 6800 + (int) (perlinNoise.noise(noiseSeed) * 100); // Slight variation using Perlin noise
+        int rpm = 6800 + (int) (PerlinNoise.noise(noiseSeed) * 100); // Slight variation using Perlin noise
         return String.format("41 0C %04X", rpm);
     }
 
@@ -29,17 +28,15 @@ public class RPMResponse extends OBDResponse {
         String substring = getDefaultResponse().replace(" ", "").substring(4, 8);
         noiseSeed += 0.1;
         int baseRpm = Integer.parseInt(substring, 16);
-        int rpm = baseRpm + (int) (perlinNoise.noise(noiseSeed) * 100); // Variation around initial value using Perlin noise
+        int rpm = baseRpm + (int) (PerlinNoise.noise(noiseSeed) * 100); // Variation around initial value using Perlin noise
         return String.format("41 0C %04X", rpm);
     }
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        String substring = stringToHex(initialValue).replace(" ", "").substring(4, 8);
-        noiseSeed += 0.1;
-        int baseRpm = Integer.parseInt(substring, 16);
-        int rpm = baseRpm + (int) (perlinNoise.noise(noiseSeed) * 100); // Variation around initial value using Perlin noise
-        return String.format("41 0C %04X", rpm);
+        int initialDecimalValue = Integer.parseInt(initialValue);
+        int noisyDecimal = PerlinNoise.addNoiseToInt(initialDecimalValue, 12);
+        return Integer.toString(noisyDecimal);
     }
 
     @Override
@@ -48,15 +45,14 @@ public class RPMResponse extends OBDResponse {
         return "41 0C" + String.format("%04X", rpm);
     }
 
-    public String getSimulatedResponseInRange(String initialValue, int lowerLimit, int upperLimit) {
-        noiseSeed += 0.1;
-        int baseRpm = Integer.parseInt(initialValue, 16);
-        int rpm = perlinNoise.noiseIntInRange(noiseSeed, lowerLimit, upperLimit);
-        return String.format("41 0C %04X", rpm);
-    }
-
     @Override
-    public String getNoErrorResponse() {
-        return getDefaultResponse(); // No error response
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            String numericInitialValue = initialValue.replaceAll("\\D", "");
+            String response = getSimulatedResponse(numericInitialValue);
+            return stringToHex(response);
+        } catch (Exception e) {
+            return "NODATA";
+        }
     }
 }

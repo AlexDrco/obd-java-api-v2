@@ -35,7 +35,21 @@ public class RuntimeResponse extends OBDResponse {
         return "41 1F " + hexRuntime;
     }
 
-    public String getNoErrorResponse(){
-        return getDefaultResponse();
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            int seconds = convertToSeconds(initialValue);
+            return stringToHex(Integer.toString(seconds));
+        } catch (Exception e) {
+            return "NODATA";
+        }
+    }
+
+    public int convertToSeconds(String time) {
+        String[] parts = time.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+        int seconds = Integer.parseInt(parts[2]);
+
+        return hours * 3600 + minutes * 60 + seconds;
     }
 }

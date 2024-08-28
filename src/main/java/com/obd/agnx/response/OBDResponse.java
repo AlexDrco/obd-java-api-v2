@@ -89,7 +89,7 @@ public abstract class OBDResponse {
      *
      * @return the no error response string
      */
-    public abstract String getNoErrorResponse();
+    public abstract String getNoErrorResponse(String initialValue);
 
 
     /**

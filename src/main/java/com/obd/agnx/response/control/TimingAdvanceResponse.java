@@ -36,7 +36,7 @@ public class TimingAdvanceResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
+    public String getNoErrorResponse(String initialValue) {
         return getDefaultResponse();
     }
 }

@@ -53,7 +53,7 @@ public class PendingTroubleCodesResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
+    public String getNoErrorResponse(String initialValue) {
         return "47 01 00 00 00 00"; // No pending trouble codes
     }
 }

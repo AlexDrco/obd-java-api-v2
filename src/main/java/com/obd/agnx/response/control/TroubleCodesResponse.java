@@ -112,7 +112,7 @@ public class TroubleCodesResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
+    public String getNoErrorResponse(String initialValue) {
         return "43 00";
     }
 }

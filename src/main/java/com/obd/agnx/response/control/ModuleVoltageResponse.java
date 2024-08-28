@@ -1,6 +1,7 @@
 package com.obd.agnx.response.control;
 
 import com.obd.agnx.response.OBDResponse;
+import com.obd.agnx.utils.PerlinNoise;
 
 public class ModuleVoltageResponse extends OBDResponse {
 
@@ -25,7 +26,9 @@ public class ModuleVoltageResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse(); // Voltage does not vary
+        double voltage = Double.parseDouble(initialValue);
+        double noisyVoltage = PerlinNoise.addNoiseToDecimal(voltage, 0.1);
+        return Double.toString(noisyVoltage);
     }
 
     @Override
@@ -38,7 +41,13 @@ public class ModuleVoltageResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
-        return getDefaultResponse(); // No error response
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            String numericInitialValue = initialValue.replaceAll("[^\\d.]*(?:\\.(?!.*\\.))?[^\\d.]*", "");
+            String response = getSimulatedResponse(numericInitialValue);
+            return stringToHex(response);
+        } catch (Exception e) {
+            return "NODATA";
+        }
     }
 }

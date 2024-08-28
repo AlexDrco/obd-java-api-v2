@@ -53,7 +53,7 @@ public class PermanentTroubleCodesResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse(){
+    public String getNoErrorResponse(String initialValue) {
         return "43 01 00 00";
     }
 }

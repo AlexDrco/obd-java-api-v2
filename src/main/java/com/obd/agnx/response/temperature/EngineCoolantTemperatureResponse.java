@@ -33,10 +33,9 @@ public class EngineCoolantTemperatureResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        noiseSeed += 0.1;
-        int baseTemp = Integer.parseInt(initialValue, 16);
-        int temp = baseTemp + (int) (perlinNoise.noise(noiseSeed) * 10); // Variation around initial value using Perlin noise
-        return String.format("41 05 %02X", temp);
+        int initialDecimalValue = Integer.parseInt(initialValue);
+        int noisyDecimal = PerlinNoise.addNoiseToInt(initialDecimalValue, 1);
+        return Integer.toString(noisyDecimal);
     }
 
     @Override
@@ -48,7 +47,13 @@ public class EngineCoolantTemperatureResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse(){
-        return "41 05 53"; // Default response with 83°C
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            String numericInitialValue = initialValue.replaceAll("\\D", "");
+            String response = getSimulatedResponse(numericInitialValue);
+            return stringToHex(response);
+        } catch (Exception e) {
+            return "NODATA";
+        }
     }
 }

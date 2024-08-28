@@ -63,7 +63,11 @@ public class DistanceSinceCCResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
-        return getDefaultResponse(); // 0 km
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            return stringToHex(initialValue.replaceAll(" ", ""));
+        } catch (Exception e) {
+            return "NODATA";
+        }
     }
 }

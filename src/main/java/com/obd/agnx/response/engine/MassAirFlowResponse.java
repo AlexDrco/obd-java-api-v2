@@ -1,6 +1,7 @@
 package com.obd.agnx.response.engine;
 
 import com.obd.agnx.response.OBDResponse;
+import com.obd.agnx.utils.PerlinNoise;
 
 public class MassAirFlowResponse extends OBDResponse {
 
@@ -25,7 +26,9 @@ public class MassAirFlowResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse();
+        double initialDecimalValue = Double.parseDouble(initialValue);
+        double noisyDecimal = PerlinNoise.addNoiseToDecimal(initialDecimalValue, 0.1);
+        return Double.toString(noisyDecimal);
     }
 
     @Override
@@ -36,7 +39,13 @@ public class MassAirFlowResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
-        return getDefaultResponse();
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            String numericInitialValue = initialValue.replaceAll("[^\\d.]*(?:\\.(?!.*\\.))?[^\\d.]*", "");
+            String response = getSimulatedResponse(numericInitialValue);
+            return stringToHex(response);
+        } catch (Exception e) {
+            return "NODATA";
+        }
     }
 }

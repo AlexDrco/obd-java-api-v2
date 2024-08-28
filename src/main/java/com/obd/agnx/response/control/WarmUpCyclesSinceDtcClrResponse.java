@@ -15,7 +15,7 @@ public class WarmUpCyclesSinceDtcClrResponse extends OBDResponse {
 
     @Override
     public String getSimulatedDefaultResponse() {
-        return getDefaultResponse(); // Simulated response with 0 warm-up cycles
+        return getDefaultResponse();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class WarmUpCyclesSinceDtcClrResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse(){
+    public String getNoErrorResponse(String initialValue) {
         return "41 30 00";
     }
 }

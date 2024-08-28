@@ -1,6 +1,7 @@
 package com.obd.agnx.response.engine;
 
 import com.obd.agnx.response.OBDResponse;
+import com.obd.agnx.utils.PerlinNoise;
 
 public class OilTempResponse extends OBDResponse {
 
@@ -25,7 +26,9 @@ public class OilTempResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        return getDefaultResponse();
+        int initialDecimalValue = Integer.parseInt(initialValue);
+        int noisyDecimal = PerlinNoise.addNoiseToInt(initialDecimalValue, 2);
+        return Integer.toString(noisyDecimal);
     }
 
     @Override
@@ -36,7 +39,13 @@ public class OilTempResponse extends OBDResponse {
     }
 
     @Override
-    public String getNoErrorResponse() {
-        return getDefaultResponse();
+    public String getNoErrorResponse(String initialValue) {
+        try {
+            String numericInitialValue = initialValue.replaceAll("\\D", "");
+            String response = getSimulatedResponse(numericInitialValue);
+            return stringToHex(response);
+        } catch (Exception e) {
+            return "NODATA";
+        }
     }
 }
