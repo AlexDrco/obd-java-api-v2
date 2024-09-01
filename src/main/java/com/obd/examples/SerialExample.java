@@ -37,7 +37,6 @@ public class SerialExample {
                 new DistanceSinceCCCommand(),
                 new DtcNumberCommand(),
                 new EquivalentRatioCommand(),
-                new IgnitionMonitorCommand(),
                 new ModuleVoltageCommand(),
                 new PendingTroubleCodesCommand(),
                 new PermanentTroubleCodesCommand(),
