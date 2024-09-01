@@ -72,6 +72,7 @@ public abstract class PersistentCommand extends ObdCommand {
         String key = getClass().getSimpleName();
         knownValues.put(key, rawData);
         knownBuffers.put(key, new ArrayList<>(buffer));
+        setRawHexString(rawData);
     }
 
     /** {@inheritDoc} */

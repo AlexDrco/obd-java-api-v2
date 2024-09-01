@@ -19,6 +19,7 @@ public class ValueToHexExample {
 
         VinResponse vinResponse = new VinResponse();
         String s = vinResponse.stringToHex("4T3DWRFV1RU113150");
+        System.out.println(s);
         WarmUpCyclesSinceDtcClrResponse warmUpCyclesSinceDtcClrResponse = new WarmUpCyclesSinceDtcClrResponse();
         String s1 = warmUpCyclesSinceDtcClrResponse.stringToHex("1");
         System.out.println(s1);
