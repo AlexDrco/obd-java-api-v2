@@ -28,7 +28,16 @@ public class RPMResponse extends OBDResponse {
         String substring = getDefaultResponse().replace(" ", "").substring(4, 8);
         noiseSeed += 0.1;
         int baseRpm = Integer.parseInt(substring, 16);
-        int rpm = baseRpm + (int) (PerlinNoise.noise(noiseSeed) * 100); // Variation around initial value using Perlin noise
+
+        // Generate a random number between 3 and 6
+        int randomNum = 3 + (int)(Math.random() * ((6 - 3) + 1));
+
+        // Randomly decide if the number should be positive or negative
+        if (Math.random() < 0.5) {
+            randomNum = -randomNum;
+        }
+
+        int rpm = baseRpm + randomNum;
         return String.format("41 0C %04X", rpm);
     }
 
