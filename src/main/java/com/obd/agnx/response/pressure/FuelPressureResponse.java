@@ -27,8 +27,14 @@ public class FuelPressureResponse extends OBDResponse {
     @Override
     public String getSimulatedResponse(String initialValue) {
         int initialDecimalValue = Integer.parseInt(initialValue);
-        int noisyDecimal = PerlinNoise.addNoiseToInt(initialDecimalValue, 1);
-        return Integer.toString(noisyDecimal);
+
+        // Generate a random number between 3 and 6
+        int randomNum = 1 + (int)(Math.random() * 1);
+
+        // Add the random number to the initial value
+        int modifiedValue = initialDecimalValue + randomNum;
+
+        return Integer.toString(modifiedValue);
     }
 
     @Override

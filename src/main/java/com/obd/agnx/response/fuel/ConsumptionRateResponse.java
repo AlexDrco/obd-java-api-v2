@@ -26,9 +26,20 @@ public class ConsumptionRateResponse extends OBDResponse {
 
     @Override
     public String getSimulatedResponse(String initialValue) {
-        double initialDecimalValue = Double.parseDouble(initialValue);
-        double noisyDecimal = PerlinNoise.addNoiseToDecimal(initialDecimalValue, 0.1);
-        return Double.toString(noisyDecimal);
+        double voltage = Double.parseDouble(initialValue);
+
+        // Generate a random number
+        double randomNum = 0.1 + (Math.random() * 0.1);
+
+        // Randomly decide if the number should be positive or negative
+        if (Math.random() < 0.5) {
+            randomNum = -randomNum;
+        }
+
+        // Add the random number to the initial value
+        double modifiedValue = voltage + randomNum;
+
+        return Double.toString(modifiedValue);
     }
 
     @Override
