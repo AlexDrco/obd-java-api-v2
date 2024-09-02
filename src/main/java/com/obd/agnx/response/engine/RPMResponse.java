@@ -28,6 +28,13 @@ public class RPMResponse extends OBDResponse {
         String substring = getDefaultResponse().replace(" ", "").substring(4, 8);
         noiseSeed += 0.1;
         int baseRpm = Integer.parseInt(substring, 16);
+        int rpm = baseRpm + (int) (PerlinNoise.noise(noiseSeed) * 100);
+        return String.format("41 0C %04X", rpm);
+    }
+
+    @Override
+    public String getSimulatedResponse(String initialValue) {
+        int initialDecimalValue = Integer.parseInt(initialValue);
 
         // Generate a random number between 3 and 6
         int randomNum = 3 + (int)(Math.random() * ((6 - 3) + 1));
@@ -37,15 +44,10 @@ public class RPMResponse extends OBDResponse {
             randomNum = -randomNum;
         }
 
-        int rpm = baseRpm + randomNum;
-        return String.format("41 0C %04X", rpm);
-    }
+        // Add the random number to the initial value
+        int modifiedValue = initialDecimalValue + randomNum;
 
-    @Override
-    public String getSimulatedResponse(String initialValue) {
-        int initialDecimalValue = Integer.parseInt(initialValue);
-        int noisyDecimal = PerlinNoise.addNoiseToInt(initialDecimalValue, 12);
-        return Integer.toString(noisyDecimal);
+        return Integer.toString(modifiedValue);
     }
 
     @Override
