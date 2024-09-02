@@ -10,8 +10,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.obd.pires.commands;
+package com.obd.pires.commands.control;
 
+import com.obd.pires.commands.ObdCommand;
+import com.obd.pires.commands.SystemOfUnits;
 import com.obd.pires.enums.AvailableCommandNames;
 
 /**

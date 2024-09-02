@@ -1,6 +1,6 @@
 package com.obd.examples;
 
-import com.obd.agnx.response.SpeedResponse;
+import com.obd.agnx.response.control.SpeedResponse;
 import com.obd.agnx.response.control.*;
 import com.obd.agnx.response.engine.*;
 import com.obd.agnx.response.fuel.*;

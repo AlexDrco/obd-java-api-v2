@@ -1,4 +1,6 @@
-package com.obd.agnx.response;
+package com.obd.agnx.response.control;
+
+import com.obd.agnx.response.OBDResponse;
 
 public class SpeedResponse extends OBDResponse {
 
