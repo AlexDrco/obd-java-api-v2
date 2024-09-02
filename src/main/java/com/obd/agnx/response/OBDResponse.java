@@ -135,6 +135,8 @@ public abstract class OBDResponse {
             case AirIntakeTemperatureCommand airIntakeTemperatureCommand -> new AirIntakeTemperatureResponse().getDefaultResponse();
             case AmbientAirTemperatureCommand ambientAirTemperatureCommand -> new AmbientAirTemperatureResponse().getDefaultResponse();
             case SpeedCommand speedCommand -> new SpeedResponse().getDefaultResponse();
+            case RuntimeMilCommand runtimeMilCommand -> new RuntimeMilResponse().getDefaultResponse();
+            case TimeSinceDtcCCommand timeSinceDtcCClearedCommand -> new TimeSinceDtcCResponse().getDefaultResponse();
             case null, default -> "NO DATA";
         };
     }
@@ -164,6 +166,8 @@ public abstract class OBDResponse {
             case WarmUpCyclesSinceDtcClrCommand warmUpCyclesSinceDtcClrCommand ->
                     new WarmUpCyclesSinceDtcClrResponse().getSimulatedResponse();
             case EvapVpCommand evapVpCommand -> new EvapVpResponse().getSimulatedResponse();
+            case RuntimeMilCommand runtimeMilCommand -> new RuntimeMilResponse().getDefaultResponse();
+            case TimeSinceDtcCCommand timeSinceDtcCClearedCommand -> new TimeSinceDtcCResponse().getDefaultResponse();
             case null, default -> "NO DATA";
         };
     }

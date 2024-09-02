@@ -48,6 +48,8 @@ public class SimulatedExample {
                 new ModuleVoltageCommand(),
                 new PendingTroubleCodesCommand(),
                 new PermanentTroubleCodesCommand(),
+                new RuntimeMilCommand(),
+                new TimeSinceDtcCCommand(),
                 new TimingAdvanceCommand(),
                 new TroubleCodesCommand(),
                 new VinCommand(),

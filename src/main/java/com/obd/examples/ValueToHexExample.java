@@ -47,7 +47,6 @@ public class ValueToHexExample {
         DistanceSinceCCResponse distanceSinceCCResponse = new DistanceSinceCCResponse();
         String s9 = distanceSinceCCResponse.stringToHex("767m");
         System.out.println(s9);
-
         TroubleCodesResponse troubleCodesResponse1 = new TroubleCodesResponse();
         String s11 = troubleCodesResponse1.stringToHex("P0300,P0420");
         System.out.println(s11);
@@ -117,10 +116,15 @@ public class ValueToHexExample {
         SpeedResponse speedResponse = new SpeedResponse();
         String s33 = speedResponse.stringToHex("60km/h");
         System.out.println(s33);
-
         DistanceMILOnResponse distanceMILOnResponse = new DistanceMILOnResponse();
         String s10 = distanceMILOnResponse.stringToHex("16km");
         System.out.println(s10);
+        RuntimeMilResponse runtimeMilResponse = new RuntimeMilResponse();
+        String s34 = runtimeMilResponse.stringToHex("65535");
+        System.out.println(s34);
+        TimeSinceDtcCResponse timeSinceDtcCResponse = new TimeSinceDtcCResponse();
+        String s35 = timeSinceDtcCResponse.stringToHex("65535");
+        System.out.println(s35);
 
         RPMResponse rpmResponse1 = new RPMResponse();
         rpmResponse1.getSimulatedResponse();
