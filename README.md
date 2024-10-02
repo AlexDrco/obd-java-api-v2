@@ -3,7 +3,12 @@ obd-java-api-v2
 
 Extends Pires OBD-II Java API and simulate vehicle ECU responses.
 
-## NOTICE
+## What changed?
+* Updated to Java 21
+* Added new commands
+* Use Response classes to convert string values into the hex values each OBD command expects
+* Comm classes
+* Example usage classes
 
 ## Important resources
 
@@ -28,12 +33,16 @@ mvn clean install
 
 ### Maven ###
 ```
-pending
+<dependency>
+    <groupId>com.agnx</groupId>
+    <artifactId>obd-java-api-v2</artifactId>
+    <version>1.0.0</version>
+</dependency>
 ```
 
 ### Gradle ###
 ```
-pending
+implementation 'com.agnx:obd-java-api-v2:1.0.0'
 ```
 
 ### Example ###
