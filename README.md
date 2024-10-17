@@ -13,8 +13,8 @@ Extends Pires OBD-II Java API and simulate vehicle ECU responses.
 
 ## Example use cases
 
-OBD Command: Use this for testing your OBD scanner code and 
-ECU Responses: Get the expected hex values from known values. (Ex. Speed value of 60km/h -> OBD response 41 0D 3C)
+* OBD Command: Use this for testing your OBD scanner code and 
+* ECU Responses: Get the expected hex values from known values. (Ex. Speed value of 60km/h -> OBD response 41 0D 3C)
 
 
 ## Important resources
