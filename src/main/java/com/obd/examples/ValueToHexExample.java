@@ -125,6 +125,15 @@ public class ValueToHexExample {
         TimeSinceDtcCResponse timeSinceDtcCResponse = new TimeSinceDtcCResponse();
         String s35 = timeSinceDtcCResponse.stringToHex("65535");
         System.out.println(s35);
+        ModuleVoltageResponse moduleVoltageResponse1 = new ModuleVoltageResponse();
+        String s36 = moduleVoltageResponse1.stringToHex("13.523");
+        System.out.println(s36);
+        ModuleVoltageResponse moduleVoltageResponse2 = new ModuleVoltageResponse();
+        String s37 = moduleVoltageResponse2.stringToHex("13.525");
+        System.out.println(s37);
+        OdometerResponse odometerResponse = new OdometerResponse();
+        String s38 = odometerResponse.stringToHex("65535km");
+        System.out.println(s38);
 
         RPMResponse rpmResponse1 = new RPMResponse();
         rpmResponse1.getSimulatedResponse();

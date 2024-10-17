@@ -60,6 +60,7 @@ public enum AvailableCommandNames {
     IGNITION_MONITOR("Ignition monitor"),
     EVAP_VP("Evap system vapor pressure"),
     WARM_UPS_SINCE_DTC_CLEAR("Warm-ups since codes cleared"),
+    ODOMETER("Odometer"),
     ;
 
     private final String value;
