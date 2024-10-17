@@ -134,8 +134,8 @@ public class ValueToHexExample {
         OdometerResponse odometerResponse = new OdometerResponse();
         String s38 = odometerResponse.stringToHex("65535km");
         System.out.println(s38);
-
-        RPMResponse rpmResponse1 = new RPMResponse();
-        rpmResponse1.getSimulatedResponse();
+        OdometerResponse odometerResponse1 = new OdometerResponse();
+        String s39 = odometerResponse1.stringToHex("40721mi");
+        System.out.println(s39);
     }
 }
