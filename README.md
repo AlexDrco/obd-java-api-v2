@@ -3,12 +3,19 @@ obd-java-api-v2
 
 Extends Pires OBD-II Java API and simulate vehicle ECU responses.
 
+
 ## What changed?
 * Updated to Java 21
 * Added new commands
 * Use Response classes to convert string values into the hex values each OBD command expects
 * Comm classes
 * Example usage classes
+
+## Example use cases
+
+* OBD Command: Use this for testing your OBD scanner code with an ELM327 device.
+* ECU Responses: Get the expected hex string from known ECU values. (Ex. Speed value of 60km/h -> OBD response "41 0D 3C").
+
 
 ## Important resources
 
