@@ -131,9 +131,6 @@ public class ValueToHexExample {
         ModuleVoltageResponse moduleVoltageResponse2 = new ModuleVoltageResponse();
         String s37 = moduleVoltageResponse2.stringToHex("13.525");
         System.out.println(s37);
-        OdometerResponse odometerResponse = new OdometerResponse();
-        String s38 = odometerResponse.stringToHex("65535km");
-        System.out.println(s38);
         OdometerResponse odometerResponse1 = new OdometerResponse();
         String s39 = odometerResponse1.stringToHex("40721mi");
         System.out.println(s39);
