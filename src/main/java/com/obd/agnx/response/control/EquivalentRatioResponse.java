@@ -52,7 +52,7 @@ public class EquivalentRatioResponse extends OBDResponse {
     @Override
     public String getNoErrorResponse(String initialValue) {
         try {
-            String numericInitialValue = initialValue.replaceAll("[^\\d.]*(?:\\.(?!.*\\.))?[^\\d.]*", "");
+            String numericInitialValue = initialValue.replaceAll("[^\\d.]+(?!\\d)", "");
             return stringToHex(numericInitialValue);
         } catch (Exception e) {
             return "NODATA";

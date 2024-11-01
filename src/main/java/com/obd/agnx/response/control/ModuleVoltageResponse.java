@@ -27,6 +27,7 @@ public class ModuleVoltageResponse extends OBDResponse {
     @Override
     public String getSimulatedResponse(String initialValue) {
         double voltage = Double.parseDouble(initialValue);
+        System.out.println("voltage: " + voltage);
 
         // Generate a random number between 0.1 and 0.2
         double randomNum = 0.1 + (Math.random() * (0.2 - 0.1));
@@ -54,7 +55,8 @@ public class ModuleVoltageResponse extends OBDResponse {
     @Override
     public String getNoErrorResponse(String initialValue) {
         try {
-            String numericInitialValue = initialValue.replaceAll("[^\\d.]*(?:\\.(?!.*\\.))?[^\\d.]*", "");
+            String numericInitialValue = initialValue.replaceAll("[^\\d.]", "");
+            System.out.println("numericInitialValue: " + numericInitialValue);
             String response = getSimulatedResponse(numericInitialValue);
             return stringToHex(response);
         } catch (Exception e) {
