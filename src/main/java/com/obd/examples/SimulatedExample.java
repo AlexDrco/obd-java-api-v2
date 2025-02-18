@@ -9,6 +9,7 @@ import com.obd.pires.commands.control.*;
 import com.obd.pires.commands.engine.*;
 import com.obd.pires.commands.fuel.*;
 import com.obd.pires.commands.pressure.*;
+import com.obd.pires.commands.protocol.ObdRawCommand;
 import com.obd.pires.commands.temperature.AirIntakeTemperatureCommand;
 import com.obd.pires.commands.temperature.AmbientAirTemperatureCommand;
 import com.obd.pires.commands.temperature.EngineCoolantTemperatureCommand;
@@ -79,7 +80,8 @@ public class SimulatedExample {
                 new AmbientAirTemperatureCommand(),
                 new EngineCoolantTemperatureCommand(),
                 // Speed Commands
-                new SpeedCommand()
+                new SpeedCommand(),
+                new ObdRawCommand("010D")
 
         );
 

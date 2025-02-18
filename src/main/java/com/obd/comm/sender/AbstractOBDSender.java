@@ -62,6 +62,7 @@ public abstract class AbstractOBDSender implements OBDSender {
             new ObdResetCommand().run(getInputStream(), getOutputStream());
             new EchoOffCommand().run(getInputStream(), getOutputStream());
             new LineFeedOffCommand().run(getInputStream(), getOutputStream());
+            new ObdRawCommand("AT H1").run(getInputStream(), getOutputStream());
             new TimeoutCommand(5000).run(getInputStream(), getOutputStream());
             new SelectProtocolCommand(ObdProtocols.AUTO).run(getInputStream(), getOutputStream());
         } catch (IOException | InterruptedException e) {
